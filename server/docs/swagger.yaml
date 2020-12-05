@@ -1,0 +1,317 @@
+basePath: /
+info:
+  contact: {}
+  description: This is a sample Server pets
+  title: Swagger Example API
+  version: 0.0.1
+paths:
+  /adConfig/getAdConfigList:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - default: 1
+        description: page
+        in: query
+        name: page
+        required: true
+        type: integer
+      - default: 10
+        description: pageSize
+        in: query
+        name: pageSize
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"success":true,"data":{},"msg":"获取成功"}'
+          schema:
+            type: string
+      security:
+      - ApiKeyAuth: []
+      summary: 分页获取AdConfig列表
+      tags:
+      - AdConfig
+  /movie/getLatestMovieList:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - default: 1
+        description: page
+        in: query
+        name: page
+        required: true
+        type: integer
+      - default: 10
+        description: pageSize
+        in: query
+        name: pageSize
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"success":true,"data":{},"msg":"获取成功"}'
+          schema:
+            type: string
+      summary: 首页->「最新更新」模块
+      tags:
+      - Movie
+  /movie/getMovieListByKeyword:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - default: 1
+        description: page
+        in: query
+        name: page
+        required: true
+        type: integer
+      - default: 10
+        description: pageSize
+        in: query
+        name: pageSize
+        required: true
+        type: integer
+      - default: t
+        description: 关键词
+        in: query
+        name: keyword
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"success":true,"data":{},"msg":"获取成功"}'
+          schema:
+            type: string
+      summary: 首页，关键词收缩影片
+      tags:
+      - Movie
+  /movie/getMovieListByTag:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - default: 1
+        description: page
+        in: query
+        name: page
+        required: true
+        type: integer
+      - default: 10
+        description: pageSize
+        in: query
+        name: pageSize
+        required: true
+        type: integer
+      - default: t
+        description: 标签名称
+        in: query
+        name: tags
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"success":true,"data":{},"msg":"获取成功"}'
+          schema:
+            type: string
+      summary: 影片详情页面，点击tag获取影片
+      tags:
+      - Movie
+  /movie/getMovieListByTypeId:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - default: 1
+        description: page
+        in: query
+        name: page
+        required: true
+        type: integer
+      - default: 10
+        description: pageSize
+        in: query
+        name: pageSize
+        required: true
+        type: integer
+      - default: "1"
+        description: 分类id
+        in: query
+        name: typeId
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"success":true,"data":{},"msg":"获取成功"}'
+          schema:
+            type: string
+      summary: 首页->顶部->「国产、日韩」模块
+      tags:
+      - Movie
+  /movie/getRecommendMovieList:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - default: 1
+        description: page
+        in: query
+        name: page
+        required: true
+        type: integer
+      - default: 10
+        description: pageSize
+        in: query
+        name: pageSize
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"success":true,"data":{},"msg":"获取成功"}'
+          schema:
+            type: string
+      summary: 首页->「热门推荐」模块
+      tags:
+      - Movie
+  /photoAlbum/getPhotoAlbumList:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - default: 1
+        description: page
+        in: query
+        name: page
+        required: true
+        type: integer
+      - default: 10
+        description: pageSize
+        in: query
+        name: pageSize
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"success":true,"data":{},"msg":"获取成功"}'
+          schema:
+            type: string
+      security:
+      - ApiKeyAuth: []
+      summary: 分页获取PhotoAlbum列表
+      tags:
+      - PhotoAlbum
+  /photoAlbum/getPhotoAlbumListByType:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - default: 1
+        description: page
+        in: query
+        name: page
+        required: true
+        type: integer
+      - default: 10
+        description: pageSize
+        in: query
+        name: pageSize
+        required: true
+        type: integer
+      - default: "1"
+        description: type
+        in: query
+        name: type
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"success":true,"data":{},"msg":"查询成功"}'
+          schema:
+            type: string
+      security:
+      - ApiKeyAuth: []
+      summary: 点击类型查询写真
+      tags:
+      - PhotoAlbum
+  /systemConfig/getSystemConfigList:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - default: 1
+        description: page
+        in: query
+        name: page
+        required: true
+        type: integer
+      - default: 10
+        description: pageSize
+        in: query
+        name: pageSize
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"success":true,"data":{},"msg":"获取成功"}'
+          schema:
+            type: string
+      security:
+      - ApiKeyAuth: []
+      summary: 分页获取SystemConfig列表
+      tags:
+      - SystemConfig
+  /tag/getTagList:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - default: 1
+        description: page
+        in: query
+        name: page
+        required: true
+        type: integer
+      - default: 10
+        description: pageSize
+        in: query
+        name: pageSize
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"success":true,"data":{},"msg":"获取成功"}'
+          schema:
+            type: string
+      security:
+      - ApiKeyAuth: []
+      summary: 分页获取Tag列表
+      tags:
+      - Tag
+securityDefinitions:
+  ApiKeyAuth:
+    in: header
+    name: x-token
+    type: apiKey
+swagger: "2.0"
