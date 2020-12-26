@@ -9,6 +9,7 @@ require (
 	github.com/casbin/casbin v1.9.1
 	github.com/casbin/casbin/v2 v2.11.0
 	github.com/casbin/gorm-adapter/v3 v3.0.2
+	github.com/cosmtrek/air v1.15.1
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible
 	github.com/fastly/go-utils v0.0.0-20180712184237-d95a45783239 // indirect
 	github.com/fsnotify/fsnotify v1.4.9
@@ -33,7 +34,6 @@ require (
 	github.com/mojocn/base64Captcha v1.3.1
 	github.com/onsi/ginkgo v1.7.0 // indirect
 	github.com/onsi/gomega v1.4.3 // indirect
-	github.com/pelletier/go-toml v1.6.0 // indirect
 	github.com/pkg/errors v0.9.1
 	github.com/qiniu/api.v7/v7 v7.4.1
 	github.com/russross/blackfriday/v2 v2.1.0 // indirect
@@ -56,5 +56,4 @@ require (
 	gopkg.in/ini.v1 v1.55.0 // indirect
 	gorm.io/driver/mysql v0.3.0
 	gorm.io/gorm v1.20.5
-
 )

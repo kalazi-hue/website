@@ -21,7 +21,7 @@ import (
 // @Param file formData file true "断点续传插件版示例"
 // @Success 200 {string} string "{"success":true,"data":{},"msg":"切片创建成功"}"
 // @Router /simpleUploader/upload [post]
-func SimpleUploaderUpload(c *gin.Context) {
+func MovieUploaderUpload(c *gin.Context) {
 	var chunk model.ExaSimpleUploader
 	_, header, err := c.Request.FormFile("file")
 	chunk.Filename = c.PostForm("filename")
@@ -55,41 +55,9 @@ func SimpleUploaderUpload(c *gin.Context) {
 	}
 }
 
-// @Tags SimpleUploader
-// @Summary 断点续传插件版示例
-// @Security ApiKeyAuth
-// @Produce  application/json
-// @Param md5 query string true "md5"
-// @Success 200 {string} string "{"success":true,"data":{},"msg":"查询成功"}"
-// @Router /simpleUploader/checkFileMd5 [get]
-func CheckFileMd5(c *gin.Context) {
-	//md5 := c.Query("md5")
-	response.OkWithDetailed(gin.H{
-		"chunks": 0,
-		"isDone": false,
-	},"查询成功", c)
-	//err, chunks, isDone := service.CheckFileMd5(md5)
-	//if err != nil {
-	//	global.GVA_LOG.Error("md5读取失败!", zap.Any("err", err))
-	//	response.FailWithMessage("md5读取失败", c)
-	//} else {
-	//	response.OkWithDetailed(gin.H{
-	//		"chunks": chunks,
-	//		"isDone": isDone,
-	//	},"查询成功", c)
-	//}
-}
 
 
-
-// @Tags SimpleUploader
-// @Summary 合并文件
-// @Security ApiKeyAuth
-// @Produce  application/json
-// @Param md5 query string true "md5"
-// @Success 200 {string} string "{"success":true,"data":{},"msg":"合并成功"}"
-// @Router /simpleUploader/mergeFileMd5 [get]
-func MergeFileMd5(c *gin.Context) {
+func MovieUploadMerge(c *gin.Context) {
 	buf := make([]byte, 1024)
 	data := new(service.PhotoAlbumUploader)
 	n, _ := c.Request.Body.Read(buf)

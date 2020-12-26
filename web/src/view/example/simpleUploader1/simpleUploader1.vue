@@ -153,7 +153,7 @@ export default {
     },
     options() {
       return {
-        target: path + "/photoAlbumUpload/photoAlbumUpload",
+        target: path + "/movieUpload/movieUpload",
         testChunks: false,
         simultaneousUploads: 50, // 并发上传数
         chunkSize: 2 * 1024 * 1024,

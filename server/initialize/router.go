@@ -18,7 +18,7 @@ import (
 func Routers() *gin.Engine {
 	var Router = gin.Default()
 	Router.StaticFS(global.GVA_CONFIG.Local.Path, http.Dir(global.GVA_CONFIG.Local.Path)) // 为用户头像和文件提供静态地址
-	// Router.Use(middleware.LoadTls())  // 打开就能玩https了
+	//Router.Use(middleware.LoadTls())  // 打开就能玩https了
 	global.GVA_LOG.Info("use middleware logger")
 	// 跨域
 	Router.Use(middleware.Cors())
@@ -56,6 +56,8 @@ func Routers() *gin.Engine {
 	router.InitTagRouter(AdminGroup)				//标签
 	router.InitSystemConfigRouter(AdminGroup)				//标签
 	router.InitPhotoAlbumRouter(AdminGroup)			//写真
+	router.PhotoAlbumUploadRouter(AdminGroup)		//写真上传
+	router.MovieUploadRouter(AdminGroup)		//写真上传
 	global.GVA_LOG.Info("admin router register success")
 
 	ApiGroup := Router.Group("api")

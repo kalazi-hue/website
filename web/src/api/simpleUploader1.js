@@ -12,7 +12,7 @@ import service from '@/utils/request'
 // @Router /simpleUploader/checkFileMd5 [get]
 export const checkFileMd5 = (params) => {
     return service({
-        url: "/simpleUploader/checkFileMd5",
+        url: "/simpleUploader1/checkFileMd5",
         method: 'get',
         params
     })
@@ -26,11 +26,18 @@ export const checkFileMd5 = (params) => {
 // @Param params md5 get "合并文件"
 // @Success 200 {string} string "{"success":true,"data":{},"msg":"合并成功"}"
 // @Router /simpleUploader/mergeFileMd5 [get]
-export const mergeFileMd5 = (params) => {
+// export const mergeFileMd5 = (params) => {
+//     return service({
+//         url: "/simpleUploader/mergeFileMd5",
+//         method: 'post',
+//         params
+//     })
+// }
+export const mergeFileMd5 = (data) => {
     return service({
-        url: "/simpleUploader/mergeFileMd5",
-        method: 'get',
-        params
+        url: "/simpleUploader1/mergeFileMd5",
+        method: 'post',
+        data
     })
 }
 

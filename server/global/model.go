@@ -1,12 +1,59 @@
 package global
 
 import (
+	"database/sql/driver"
+	"strings"
 	"time"
+	"fmt"
 )
+
+
 
 type GVA_MODEL struct {
 	ID        uint `gorm:"primarykey" json "id"`
-	CreatedAt time.Time `gorm:"created_at" json:"createdAt"`
-	UpdatedAt time.Time `gorm:"updated_at" json:"updatedAt"`
-	DeletedAt time.Time `gorm:"index" json:"-"`
+	CreatedAt MyTime `gorm:"created_at"  json:"createdAt"`
+	UpdatedAt MyTime `gorm:"updated_at" json:"updatedAt"`
+	DeletedAt MyTime `gorm:"index" json:"-"`
+}
+
+//MyTime 自定义时间
+type MyTime time.Time
+
+func (t *MyTime) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
+	var err error
+	//前端接收的时间字符串
+	str := string(data)
+	//去除接收的str收尾多余的"
+	timeStr := strings.Trim(str, "\"")
+	t1, err := time.Parse("2006-01-02 15:04:05", timeStr)
+	*t = MyTime(t1)
+	return err
+}
+
+func (t MyTime) MarshalJSON() ([]byte, error) {
+	formatted := fmt.Sprintf("\"%v\"", time.Time(t).Format("2006-01-02 15:04:05"))
+	return []byte(formatted), nil
+}
+
+func (t MyTime) Value() (driver.Value, error) {
+	// MyTime 转换成 time.Time 类型
+	tTime := time.Time(t)
+	return tTime.Format("2006-01-02 15:04:05"), nil
+}
+
+func (t *MyTime) Scan(v interface{}) error {
+	switch vt := v.(type) {
+	case time.Time:
+		// 字符串转成 time.Time 类型
+		*t = MyTime(vt)
+	default:
+	}
+	return nil
+}
+
+func (t *MyTime) String() string {
+	return fmt.Sprintf("hhh:%s", time.Time(*t).String())
 }
