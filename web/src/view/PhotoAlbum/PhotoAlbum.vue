@@ -59,16 +59,35 @@
     >
     <el-table-column type="selection" width="55"></el-table-column>
 
+    <el-table-column prop="title" label="名称" width="120" height="80" show-overflow-tooltip>
+        <template slot-scope="scope">
+            <p class="">{{scope.row.title}}</p>
+        </template>
+    </el-table-column>
     
-    <el-table-column label="名称" prop="title" ></el-table-column> 
+    <el-table-column prop="cover" label="封面图" sortable width="80">
+        <template slot-scope="scope">
+            <img :src="scope.row.cover" :title="scope.row.cover" alt style="width: 60px;height: 40px" />
+        </template>
+    </el-table-column>
+
+    <el-table-column prop="description" label="影集简介" width="120" height="80" show-overflow-tooltip>
+        <template slot-scope="scope">
+            <p class="">{{scope.row.description}}</p>
+        </template>
+    </el-table-column>
+
+    <el-table-column prop="content" label="影集内容" width="120" height="80" show-overflow-tooltip>
+        <template slot-scope="scope">
+            <p class="">{{scope.row.content}}</p>
+        </template>
+    </el-table-column>
     
-    <el-table-column label="封面" prop="cover" ></el-table-column>
-    
-    <el-table-column label="简介" prop="description" ></el-table-column> 
-    
-    <el-table-column label="内容" prop="content" ></el-table-column> 
-    
-    <el-table-column label="关键词" prop="keyword" ></el-table-column> 
+    <el-table-column prop="keyword" label="关键词" width="120" show-overflow-tooltip>
+        <template slot-scope="scope">
+            <p class="">{{scope.row.keyword}}</p>
+        </template>
+    </el-table-column>
     
     <el-table-column label="是否置顶" prop="isTop" >
          <template slot-scope="scope">{{scope.row.isTop|formatBoolean}}</template>
@@ -79,10 +98,13 @@
     <el-table-column label="是否上架" prop="status" >
          <template slot-scope="scope">{{scope.row.status|formatBoolean}}</template>
     </el-table-column>
-    
-    <el-table-column label="创建日期" >
-             <template slot-scope="scope">{{scope.row.createdAt|formatDate}}</template>
-        </el-table-column>
+ 
+    <el-table-column prop="createdAt" label="创建日期" width="120" show-overflow-tooltip>
+        <template slot-scope="scope">
+            <p class="">{{scope.row.createdAt|formatDate}}</p>
+        </template>
+    </el-table-column>
+
       <el-table-column label="操作">
         <template slot-scope="scope">
           <el-button class="table-button" @click="updatePhotoAlbum(scope.row)" size="small" type="primary" icon="el-icon-edit">编辑</el-button>

@@ -13,7 +13,7 @@
 
     <el-alert
         style="margin-top: 0"
-        title="第一步：请填写图集信息"
+        title="第一步：请填写影片信息"
         type="success"
         show-icon
         :closable="false"
@@ -22,29 +22,31 @@
 
     <div class="img-detail">
       <el-form :model="formData" ref="formData" label-position="right" label-width="80px">
-        <el-form-item label="图集类型">
+        <el-form-item label="*影片类型">
           <el-select v-model="formData.type" placeholder="请选择类型">
-            <el-option label="写真图集" value="xiezhen"></el-option>
-            <el-option label="漫画图集" value="manhua"></el-option>
+            <el-option label="国产" value="guochan"></el-option>
+            <el-option label="日韩" value="rihan"></el-option>
+            <el-option label="欧美" value="oumei"></el-option>
+            <el-option label="动漫" value="dongman"></el-option>
           </el-select>
         </el-form-item>
 
-        <el-form-item label="图集标题:">
-          <el-input v-model="formData.title" clearable placeholder="请输入" ></el-input>
+        <el-form-item label="*影片名称:">
+          <el-input v-model="formData.title" clearable placeholder="片名必填" ></el-input>
         </el-form-item>
 
-        <el-form-item label="图集描述:">
-          <el-input v-model="formData.desc" clearable placeholder="请输入" ></el-input>
+        <el-form-item label="影片描述:">
+          <el-input v-model="formData.desc" clearable placeholder="可以不填" ></el-input>
         </el-form-item>
 
-        <el-form-item label="关键字:">
+        <el-form-item label="影片标签:">
           <el-tag
-              :key="tag"
-              v-for="tag in formData.keywords"
+              :key="item"
+              v-for="item in formData.tag"
               closable
               :disable-transitions="false"
-              @close="handleClose(tag)">
-            {{tag}}
+              @close="handleClose(item)">
+            {{item}}
           </el-tag>
           <el-input
               class="input-new-tag"
@@ -59,16 +61,25 @@
           <el-button v-else class="button-new-tag" size="small" @click="showInput">+ 关键词</el-button>
         </el-form-item>
 
-        <el-form-item label="启用状态:">
-          <el-switch active-color="#13ce66" inactive-color="#ff4949" active-text="是" inactive-text="否" v-model="formData.status" clearable ></el-switch>
+        <el-form-item label="是否置顶:">
+          <el-switch active-color="#409EFF" inactive-color="#cab3b3" active-text="是" inactive-text="否" v-model="formData.isTop" clearable ></el-switch>
         </el-form-item>
+
+        <el-form-item label="是否推荐:">
+          <el-switch active-color="#409EFF" inactive-color="#cab3b3" active-text="是" inactive-text="否" v-model="formData.isRecommend" clearable ></el-switch>
+        </el-form-item>
+
+        <el-form-item label="启用状态:">
+          <el-switch active-color="#409EFF" inactive-color="#cab3b3" active-text="是" inactive-text="否" v-model="formData.status" clearable ></el-switch>
+        </el-form-item>
+
       </el-form>
       <el-button type="primary" @click="checkForm" style="margin: 20px auto 0;" >下一步<i class="el-icon-bottom el-icon--bottom"></i></el-button>
     </div>
 
     <el-alert
         v-show="isShowStep2"
-        title="第二步：请上传封面"
+        title="第二步：请上传视频封面"
         show-icon
         type="success"
         :closable="false"
@@ -82,7 +93,7 @@
 
     <el-alert
         v-show="isShowStep3"
-        title="第三步：请上传图集"
+        title="第三步：请上传影片"
         show-icon
         type="success"
         :closable="false"
@@ -136,7 +147,9 @@ export default {
         desc: '',
         type: '',
         status:true,
-        keywords: [],
+        isTop:false,
+        isRecommend:false,
+        tag: [],
       }
     }
   },
@@ -253,7 +266,9 @@ export default {
         desc:this.formData.desc,
         type:this.formData.type,
         status:this.formData.status,
-        keywords:this.formData.keywords,
+        isTop:this.formData.isTop,
+        isRecommend:this.formData.isRecommend,
+        tag:this.formData.tag,
         isCover:this.isCover
       })
     },
@@ -264,7 +279,7 @@ export default {
       });
     },
     handleClose(tag) {
-      this.formData.keywords.splice(this.formData.keywords.indexOf(tag), 1);
+      this.formData.tag.splice(this.formData.tag.indexOf(tag), 1);
     },
     showInput() {
       this.inputVisible = true;
@@ -275,13 +290,13 @@ export default {
     handleInputConfirm() {
       let inputValue = this.inputValue;
       if (inputValue) {
-        this.formData.keywords.push(inputValue);
+        this.formData.tag.push(inputValue);
       }
       this.inputVisible = false;
       this.inputValue = '';
     },
     resetForm() {
-      this.$confirm('确定第三步图集全部上传完成?', '提示', {
+      this.$confirm('确定第三步影片全部上传完成?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
@@ -298,7 +313,7 @@ export default {
         this.formData.title = ''
         this.formData.desc = ''
         this.formData.type = ''
-        this.formData.keywords = []
+        this.formData.tag = []
         setTimeout(() => {
           this.isShowList = true
         }, 2000)
@@ -310,33 +325,21 @@ export default {
       });
     },
     checkForm () {
-      // 验证是否填写表单信息 title  desc  type  status  keywords
+      // 验证是否填写表单信息 title  desc  type  status  tag
       var that = this;
       if (!that.formData.type) {
         that.$message({
-          message: '请填写图集类型',
+          message: '请填写影片类型',
           type: "error"
         });
         return false
       } else if (!that.formData.title) {
         that.$message({
-          message: '请填写图集标题',
+          message: '请填写影片名称',
           type: "error"
         });
         return false
-      }  else if (!that.formData.desc) {
-        that.$message({
-          message: '请填写图集描述',
-          type: "error"
-        });
-        return false
-      } else if (that.formData.keywords === '') {
-        that.$message({
-          message: '请至少添加一个关键词',
-          type: "error"
-        });
-        return false
-      }
+      } 
       if (this.isShowStep1 && this.isCover) {
         this.isShowStep2 = true
       }

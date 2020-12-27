@@ -76,22 +76,45 @@
     >
     <el-table-column type="selection" width="55"></el-table-column>
 
+    <el-table-column prop="title" label="片名" width="120" height="80" show-overflow-tooltip>
+        <template slot-scope="scope">
+            <p class="">{{scope.row.title}}</p>
+        </template>
+    </el-table-column>
+
+    <el-table-column prop="description" label="影片简介" width="120" height="80" show-overflow-tooltip>
+        <template slot-scope="scope">
+            <p class="">{{scope.row.description}}</p>
+        </template>
+    </el-table-column>
     
-    <el-table-column label="片名" prop="title" ></el-table-column> 
-    
-    <el-table-column label="影片简介" prop="description" ></el-table-column> 
-    
-    <el-table-column label="封面图" prop="cover" ></el-table-column> 
+    <el-table-column prop="cover" label="封面图" sortable width="80">
+        <template slot-scope="scope">
+            <img :src="scope.row.cover" :title="scope.row.cover" alt style="width: 60px;height: 40px" />
+        </template>
+    </el-table-column>
     
     <el-table-column label="影片时长" prop="playTime" ></el-table-column> 
     
-    <el-table-column label="播放链接" prop="playUrl" ></el-table-column> 
-    
-    <el-table-column label="下载链接" prop="downUrl" ></el-table-column> 
-    
+    <el-table-column prop="playUrl" label="播放链接" width="120" show-overflow-tooltip>
+        <template slot-scope="scope">
+            <p class="">{{scope.row.playUrl}}</p>
+        </template>
+    </el-table-column>
+
+    <el-table-column prop="downUrl" label="下载链接" width="120" show-overflow-tooltip>
+        <template slot-scope="scope">
+            <p class="">{{scope.row.downUrl}}</p>
+        </template>
+    </el-table-column>
+
     <el-table-column label="影片类型" prop="type" ></el-table-column> 
-    
-    <el-table-column label="标签" prop="tags" ></el-table-column> 
+
+    <el-table-column prop="tags" label="标签" width="120" show-overflow-tooltip>
+        <template slot-scope="scope">
+            <p class="">{{scope.row.tags}}</p>
+        </template>
+    </el-table-column>
     
     <el-table-column label="点赞数" prop="star" ></el-table-column> 
     
@@ -105,15 +128,22 @@
          <template slot-scope="scope">{{scope.row.isRecommend|formatBoolean}}</template>
     </el-table-column>
     
-    <el-table-column label="上架时间" prop="shelfTime" ></el-table-column> 
+    <el-table-column prop="shelfTime" label="上架时间" width="120" show-overflow-tooltip>
+        <template slot-scope="scope">
+            <p class="">{{scope.row.shelfTime}}</p>
+        </template>
+    </el-table-column>
     
     <el-table-column label="是否上架" prop="status" >
          <template slot-scope="scope">{{scope.row.status|formatBoolean}}</template>
     </el-table-column>
     
-    <el-table-column label="创建日期" >
-             <template slot-scope="scope">{{scope.row.createdAt|formatDate}}</template>
-        </el-table-column>
+    <el-table-column prop="createdAt" label="创建日期" width="120" show-overflow-tooltip>
+        <template slot-scope="scope">
+            <p class="">{{scope.row.createdAt|formatDate}}</p>
+        </template>
+    </el-table-column>
+
       <el-table-column label="操作">
         <template slot-scope="scope">
           <el-button class="table-button" @click="updateMovie(scope.row)" size="small" type="primary" icon="el-icon-edit">编辑</el-button>
