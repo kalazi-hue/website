@@ -46,15 +46,24 @@
       style="width: 100%"
       tooltip-effect="dark"
     >
-    <el-table-column type="selection" width="55"></el-table-column>
+    <el-table-column type="selection" width="40"></el-table-column>
 
+    <el-table-column prop="name" label="标签名称" width="120" show-overflow-tooltip>
+        <template slot-scope="scope">
+          <el-tag type="info" size="medium">{{scope.row.name}}</el-tag>
+        </template>
+    </el-table-column>
     
-    <el-table-column label="标签名称" prop="name" ></el-table-column> 
-    
-    <el-table-column label="排序权重，值越高越靠前" prop="sort" ></el-table-column> 
-    
-    <el-table-column label="启用状态" prop="status" >
-         <template slot-scope="scope">{{scope.row.status|formatBoolean}}</template>
+    <el-table-column label="排序（数字越大越靠前）" prop="sort" ></el-table-column> 
+
+    <el-table-column label="启用状态" prop="status" width="80">
+      <template slot-scope="scope">
+          <el-switch
+            v-model="scope.row.status"
+            active-color="#F56C6C"
+            inactive-color="#cab3b3"
+            @change="changeSwitch($event,scope.row)"/>
+      </template>
     </el-table-column>
     
     <el-table-column label="创建日期" >
@@ -62,7 +71,7 @@
         </el-table-column>
       <el-table-column label="操作">
         <template slot-scope="scope">
-          <el-button class="table-button" @click="updateTag(scope.row)" size="small" type="primary" icon="el-icon-edit">编辑</el-button>
+          <el-button class="table-button" @click="updateTag('',scope.row,'')" size="small" type="primary" icon="el-icon-edit">编辑</el-button>
           <el-popover placement="top" width="160" v-model="scope.row.visible">
             <p>确定要删除吗？</p>
             <div style="text-align: right; margin: 0">
@@ -87,12 +96,12 @@
     ></el-pagination>
 
     <el-dialog :before-close="closeDialog" :visible.sync="dialogFormVisible" title="弹窗操作">
-      <el-form :model="formData" label-position="right" label-width="80px">
+      <el-form :model="formData" label-position="right" label-width="180px">
          <el-form-item label="标签名称:">
             <el-input v-model="formData.name" clearable placeholder="请输入" ></el-input>
       </el-form-item>
        
-         <el-form-item label="排序权重，值越高越靠前:"><el-input v-model.number="formData.sort" clearable placeholder="请输入"></el-input>
+         <el-form-item label="排序（数字越大越靠前）:"><el-input v-model.number="formData.sort" clearable placeholder="请输入"></el-input>
       </el-form-item>
        
          <el-form-item label="启用状态:">
@@ -154,6 +163,9 @@ export default {
     }
   },
   methods: {
+    changeSwitch (e, row) { // 列表中操作switch按钮
+      this.updateTag(e, row, 'isSwitch');
+    },
       //条件搜索前端看此方法
       onSubmit() {
         this.page = 1
@@ -189,12 +201,19 @@ export default {
           this.getTableData()
         }
       },
-    async updateTag(row) {
+    async updateTag(e, row, isSwitch) {
       const res = await findTag({ ID: row.ID });
       this.type = "update";
       if (res.code == 0) {
         this.formData = res.data.retag;
-        this.dialogFormVisible = true;
+        if (isSwitch === 'isSwitch') { // 表格列Switch按钮直接切换
+          this.dialogFormVisible = false;
+          this.formData.status = e
+          console.log(e)
+          this.enterDialog(isSwitch)
+        } else {
+          this.dialogFormVisible = true;          
+        }
       }
     },
     closeDialog() {
@@ -217,7 +236,7 @@ export default {
         this.getTableData();
       }
     },
-    async enterDialog() {
+    async enterDialog(isSwitch) {
       let res;
       switch (this.type) {
         case "create":
@@ -236,7 +255,9 @@ export default {
           message:"创建/更改成功"
         })
         this.closeDialog();
-        this.getTableData();
+        if (isSwitch !== 'isSwitch') { // 表格列Switch按钮直接切换
+          this.getTableData();
+        }
       }
     },
     openDialog() {

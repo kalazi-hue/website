@@ -57,7 +57,7 @@
       style="width: 100%"
       tooltip-effect="dark"
     >
-    <el-table-column type="selection" width="55"></el-table-column>
+    <el-table-column type="selection" width="40"></el-table-column>
 
     <el-table-column prop="title" label="名称" width="120" height="80" show-overflow-tooltip>
         <template slot-scope="scope">
@@ -67,7 +67,13 @@
     
     <el-table-column prop="cover" label="封面图" sortable width="80">
         <template slot-scope="scope">
-            <img :src="scope.row.cover" :title="scope.row.cover" alt style="width: 60px;height: 40px" />
+            <img :src="scope.row.cover" :title="scope.row.cover" alt style="background-color: #ccc;width: 60px;height: 40px" />
+        </template>
+    </el-table-column>
+ 
+    <el-table-column prop="createdAt" label="创建日期" width="120" show-overflow-tooltip>
+        <template slot-scope="scope">
+            <p class="">{{scope.row.createdAt|formatDate}}</p>
         </template>
     </el-table-column>
 
@@ -88,26 +94,33 @@
             <p class="">{{scope.row.keyword}}</p>
         </template>
     </el-table-column>
-    
-    <el-table-column label="是否置顶" prop="isTop" >
-         <template slot-scope="scope">{{scope.row.isTop|formatBoolean}}</template>
-    </el-table-column>
-    
+
     <el-table-column label="点击量" prop="reads" ></el-table-column> 
     
-    <el-table-column label="是否上架" prop="status" >
-         <template slot-scope="scope">{{scope.row.status|formatBoolean}}</template>
+   <el-table-column label="是否置顶" prop="isTop" >
+      <template slot-scope="scope">
+          <el-switch
+            v-model="scope.row.isTop"
+            active-color="#F56C6C"
+            inactive-color="#cab3b3"
+            @change="changeSwitch($event,scope.row, 'isTop')"/>
+      </template>
     </el-table-column>
- 
-    <el-table-column prop="createdAt" label="创建日期" width="120" show-overflow-tooltip>
-        <template slot-scope="scope">
-            <p class="">{{scope.row.createdAt|formatDate}}</p>
-        </template>
+    
+    
+    <el-table-column label="是否上架" prop="status" >
+      <template slot-scope="scope">
+          <el-switch
+            v-model="scope.row.status"
+            active-color="#F56C6C"
+            inactive-color="#cab3b3"
+            @change="changeSwitch($event,scope.row, 'isShelf')"/>
+      </template>
     </el-table-column>
 
       <el-table-column label="操作">
         <template slot-scope="scope">
-          <el-button class="table-button" @click="updatePhotoAlbum(scope.row)" size="small" type="primary" icon="el-icon-edit">编辑</el-button>
+          <el-button class="table-button" @click="updatePhotoAlbum('',scope.row,'','')" size="small" type="primary" icon="el-icon-edit">编辑</el-button>
           <el-popover placement="top" width="160" v-model="scope.row.visible">
             <p>确定要删除吗？</p>
             <div style="text-align: right; margin: 0">
@@ -152,16 +165,17 @@
          <el-form-item label="关键词:">
             <el-input v-model="formData.keyword" clearable placeholder="请输入" ></el-input>
       </el-form-item>
+
+       <el-form-item label="点击量:"><el-input v-model.number="formData.reads" clearable placeholder="请输入"></el-input>
+      </el-form-item>
        
          <el-form-item label="是否置顶:">
-            <el-switch active-color="#13ce66" inactive-color="#ff4949" active-text="是" inactive-text="否" v-model="formData.isTop" clearable ></el-switch>
-      </el-form-item>
+            <el-switch active-color="#13ce66" inactive-color="#cab3b3" active-text="是" inactive-text="否" v-model="formData.isTop" clearable ></el-switch>
+       </el-form-item>
        
-         <el-form-item label="点击量:"><el-input v-model.number="formData.reads" clearable placeholder="请输入"></el-input>
-      </el-form-item>
        
          <el-form-item label="是否上架:">
-            <el-switch active-color="#13ce66" inactive-color="#ff4949" active-text="是" inactive-text="否" v-model="formData.status" clearable ></el-switch>
+            <el-switch active-color="#13ce66" inactive-color="#cab3b3" active-text="是" inactive-text="否" v-model="formData.status" clearable ></el-switch>
       </el-form-item>
        </el-form>
       <div class="dialog-footer" slot="footer">
@@ -224,6 +238,9 @@ export default {
     }
   },
   methods: {
+    changeSwitch (e, row, type) { // 列表中操作switch按钮
+      this.updatePhotoAlbum(e, row, type, 'isSwitch');
+    },
       //条件搜索前端看此方法
       onSubmit() {
         this.page = 1
@@ -262,12 +279,24 @@ export default {
           this.getTableData()
         }
       },
-    async updatePhotoAlbum(row) {
+    async updatePhotoAlbum(e, row, type, isSwitch) {
       const res = await findPhotoAlbum({ ID: row.ID });
       this.type = "update";
       if (res.code == 0) {
         this.formData = res.data.rephotoAlbum;
-        this.dialogFormVisible = true;
+        if (isSwitch === 'isSwitch') { // 表格列Switch按钮直接切换
+          this.dialogFormVisible = false;
+          if (type === 'isTop') {
+            this.formData.isTop = e
+          } else if (type === 'isRecommend') {
+            this.formData.isRecommend = e
+          } else if (type === 'isShelf') {
+            this.formData.status = e
+          }
+          this.enterDialog(isSwitch)
+        } else {
+          this.dialogFormVisible = true;          
+        }
       }
     },
     closeDialog() {
@@ -295,7 +324,7 @@ export default {
         this.getTableData();
       }
     },
-    async enterDialog() {
+    async enterDialog(isSwitch) {
       let res;
       switch (this.type) {
         case "create":
@@ -314,7 +343,9 @@ export default {
           message:"创建/更改成功"
         })
         this.closeDialog();
-        this.getTableData();
+        if (isSwitch !== 'isSwitch') { // 表格列Switch按钮直接切换
+          this.getTableData();
+        }
       }
     },
     openDialog() {
