@@ -39,17 +39,16 @@ func Routers() *gin.Engine {
 	router.InitAuthorityRouter(AdminGroup)             // 注册角色路由
 	router.InitApiRouter(AdminGroup)                   // 注册功能api路由
 	router.InitFileUploadAndDownloadRouter(AdminGroup) // 文件上传下载功能路由
-	router.InitSimpleUploaderRouter(AdminGroup)        // 断点续传（插件版）
-	router.InitWorkflowRouter(AdminGroup)              // 工作流相关路由
+	//router.InitWorkflowRouter(AdminGroup)              // 工作流相关路由
 	router.InitCasbinRouter(AdminGroup)                // 权限相关路由
 	router.InitJwtRouter(AdminGroup)                   // jwt相关路由
 	router.InitSystemRouter(AdminGroup)                // system相关路由
-	router.InitCustomerRouter(AdminGroup)              // 客户路由
+	//router.InitCustomerRouter(AdminGroup)              // 客户路由
 	router.InitAutoCodeRouter(AdminGroup)              // 创建自动化代码
 	router.InitSysDictionaryDetailRouter(AdminGroup)   // 字典详情管理
 	router.InitSysDictionaryRouter(AdminGroup)         // 字典管理
 	router.InitSysOperationRecordRouter(AdminGroup)    // 操作记录
-	router.InitEmailRouter(AdminGroup)                 // 邮件相关路由
+	//router.InitEmailRouter(AdminGroup)                 // 邮件相关路由
 
 	router.InitAdConfigRouter(AdminGroup)				//广告
 	router.InitMovieRouter(AdminGroup)				//影片

@@ -70,10 +70,10 @@ func MovieUploadMerge(c *gin.Context) {
 
 
 	//.上传内容处理
-	data.DstName, _ = service.MergeFileMd5(data.Md5, data.FileName)//4e9002c48226e9c1d99ca40a02ea925b.jpg
+	data.DstName, _ = service.MovieMerge(data.Md5, data.FileName)//4e9002c48226e9c1d99ca40a02ea925b.jpg
 
 	//入库
-	err = service.SaveToDB(data)
+	err = service.MovieSaveToDB(data)
 	if err != nil {
 		global.GVA_LOG.Error("入库失败!", zap.Any("err", err))
 		response.FailWithMessage("入库失败", c)

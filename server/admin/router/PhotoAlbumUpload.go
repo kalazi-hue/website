@@ -10,5 +10,6 @@ func PhotoAlbumUploadRouter(Router *gin.RouterGroup) {
 	{
 		ApiRouter.POST("photoAlbumUpload", api.PhotoAlbumUploaderUpload) // 上传功能
 		ApiRouter.POST("photoAlbumMerge", api.PhotoAlbumUploadMerge) // 合并
+		ApiRouter.GET("photoAlbumCheckMd5", api.PhotoAlbumCheckMd5)
 	}
 }

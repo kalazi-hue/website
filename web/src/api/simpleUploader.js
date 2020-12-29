@@ -12,7 +12,7 @@ import service from '@/utils/request'
 // @Router /simpleUploader/checkFileMd5 [get]
 export const checkFileMd5 = (params) => {
     return service({
-        url: "/simpleUploader/checkFileMd5",
+        url: "/photoAlbumUpload/photoAlbumCheckMd5",
         method: 'get',
         params
     })

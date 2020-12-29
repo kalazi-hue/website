@@ -13,4 +13,7 @@ type Server struct {
 	// oss
 	Local Local `mapstructure:"local" json:"local" yaml:"local"`
 	Qiniu Qiniu `mapstructure:"qiniu" json:"qiniu" yaml:"qiniu"`
+	// upload
+	Upload  Upload  `mapstructure:"upload" json:"upload" yaml:"upload"`
+
 }

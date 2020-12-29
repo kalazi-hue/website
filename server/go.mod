@@ -9,7 +9,6 @@ require (
 	github.com/casbin/casbin v1.9.1
 	github.com/casbin/casbin/v2 v2.11.0
 	github.com/casbin/gorm-adapter/v3 v3.0.2
-	github.com/cosmtrek/air v1.15.1
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible
 	github.com/fastly/go-utils v0.0.0-20180712184237-d95a45783239 // indirect
 	github.com/fsnotify/fsnotify v1.4.9
@@ -34,11 +33,11 @@ require (
 	github.com/mojocn/base64Captcha v1.3.1
 	github.com/onsi/ginkgo v1.7.0 // indirect
 	github.com/onsi/gomega v1.4.3 // indirect
+	github.com/pelletier/go-toml v1.8.1 // indirect
 	github.com/pkg/errors v0.9.1
 	github.com/qiniu/api.v7/v7 v7.4.1
-	github.com/russross/blackfriday/v2 v2.1.0 // indirect
 	github.com/satori/go.uuid v1.2.0
-	github.com/shirou/gopsutil v2.20.8+incompatible
+	github.com/shirou/gopsutil v3.20.11+incompatible
 	github.com/spf13/afero v1.2.2 // indirect
 	github.com/spf13/cast v1.3.1 // indirect
 	github.com/spf13/cobra v1.1.1
@@ -48,9 +47,9 @@ require (
 	github.com/swaggo/swag v1.6.9
 	github.com/tebeka/strftime v0.1.3 // indirect
 	github.com/unrolled/secure v1.0.7
-	github.com/urfave/cli/v2 v2.3.0 // indirect
 	go.uber.org/zap v1.10.0
 	golang.org/x/net v0.0.0-20201202161906-c7110b5ffcbb // indirect
+	golang.org/x/sys v0.0.0-20201223074533-0d417f636930 // indirect
 	golang.org/x/tools v0.0.0-20201204062850-545788942d5f // indirect
 	google.golang.org/protobuf v1.24.0 // indirect
 	gopkg.in/ini.v1 v1.55.0 // indirect

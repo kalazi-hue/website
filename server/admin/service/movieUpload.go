@@ -12,7 +12,7 @@ import (
 	"strconv"
 	"strings"
 )
-type PhotoAlbumUploader struct {
+type MovieUploader struct {
 	Title string `json:title`
 	Desc string `json:desc`
 	Keywords []string `json:keywords`
@@ -32,7 +32,7 @@ type PhotoAlbumUploader struct {
 //@param: uploader model.ExaSimpleUploader
 //@return: err error
 
-func SaveChunk(uploader model.ExaSimpleUploader) (err error) {
+func MovieSaveChunk(uploader model.ExaSimpleUploader) (err error) {
 	return global.GVA_DB.Create(uploader).Error
 }
 
@@ -42,19 +42,19 @@ func SaveChunk(uploader model.ExaSimpleUploader) (err error) {
 //@param: md5 string
 //@return: err error, uploads []model.ExaSimpleUploader, isDone bool
 
-func CheckFileMd5(md5 string) (err error, uploads []model.ExaSimpleUploader, isDone bool) {
+func MovieCheckFileMd5(md5 string) (err error, uploads []model.ExaSimpleUploader, isDone bool) {
 	err = global.GVA_DB.Find(&uploads, "identifier = ? AND is_done = ?", md5, false).Error
 	isDone = errors.Is(global.GVA_DB.First(&model.ExaSimpleUploader{}, "identifier = ? AND is_done = ?", md5, true).Error, gorm.ErrRecordNotFound)
 	return err, uploads, !isDone
 }
 
 //@author: [piexlmax](https://github.com/piexlmax)
-//@function: MergeFileMd5
+//@function: PhotoMerge
 //@description: 合并文件
 //@param: md5 string, fileName string
 //@return: err error
 
-func MergeFileMd5(md5 string, fileName string) (dstName string, err error) {
+func MovieMerge(md5 string, fileName string) (dstName string, err error) {
 	finishDir := "./finish/"
 	chunkDir := "./chunk/" + md5
 	dstName = md5 + path.Ext(fileName)
@@ -99,7 +99,7 @@ func MergeFileMd5(md5 string, fileName string) (dstName string, err error) {
 	return dstName,err
 }
 
-func SaveToDB(up *PhotoAlbumUploader) (err error) {
+func MovieSaveToDB(up *PhotoAlbumUploader) (err error) {
 	var photoAlbum model.PhotoAlbum
 	var data model.PhotoAlbum
 	var IsCreate = true
