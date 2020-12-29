@@ -52,8 +52,9 @@
     <el-table-column label="联系我们" prop="contact" ></el-table-column> 
     
     <el-table-column label="创建日期" >
-             <template slot-scope="scope">{{scope.row.createdAt|formatDate}}</template>
-        </el-table-column>
+         <template slot-scope="scope">{{scope.row.createdAt|formatDate}}</template>
+    </el-table-column>
+        
       <el-table-column label="操作">
         <template slot-scope="scope">
           <el-button class="table-button" @click="updateSystemConfig(scope.row)" size="small" type="primary" icon="el-icon-edit">编辑</el-button>

@@ -47,14 +47,21 @@
       tooltip-effect="dark"
     >
     <el-table-column type="selection" width="55"></el-table-column>
-
     
     <el-table-column label="广告位置" prop="position" ></el-table-column> 
-    
-    <el-table-column label="图片链接" prop="url" >
+
+    <el-table-column prop="cover" label="图片" sortable width="120">
+        <!--插入图片链接的代码-->
+        <template slot-scope="scope">
+            <img :src="scope.row.url"  :title="scope.row.url" alt style="width: 100px;height: 20px" />
+        </template>
     </el-table-column>
-    
-    <el-table-column label="播放链接" prop="playUrl" ></el-table-column> 
+
+    <el-table-column prop="playUrl" label="跳转链接" width="220" height="80" show-overflow-tooltip>
+        <template slot-scope="scope">
+            <p class="">{{scope.row.playUrl}}</p>
+        </template>
+    </el-table-column>
     
     <el-table-column label="内容描述" prop="description" ></el-table-column> 
     

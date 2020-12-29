@@ -1484,6 +1484,24 @@ $mainHight: 100vh;
     }
 }
 
+.admin-box {
+    .el-table {
+        td {
+            padding: 2px 0;
+            p {
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+            }
+        }
+    }
+}
+.el-dialog__body {
+    .el-form-item {
+        margin-bottom: 5px;
+    }
+}
+
 ::-webkit-scrollbar-track-piece {
     background-color: #f8f8f8;
 }
