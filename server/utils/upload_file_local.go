@@ -52,3 +52,24 @@ func UploadFileLocal(file *multipart.FileHeader) (err error, localPath string, k
 	}
 	return nil, dst, lastName
 }
+
+
+func FileTypeCheck(fileName string) (fileType int, err error) {
+	ext := path.Ext(fileName)
+	imgType := map[string]int{
+		"jpg":  1,
+		"jpeg": 1,
+		"png":  1,
+	}
+	videoType := map[string]int{
+		"mp4": 1,
+		"rmvb": 1,
+	}
+	if _,ok := imgType[ext]; ok{
+		return 1,nil
+	}
+	if _,ok := videoType[ext]; ok {
+		return 2, nil
+	}
+	return 0, nil
+}

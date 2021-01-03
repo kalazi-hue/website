@@ -6,7 +6,8 @@ import (
     "gin-vue-admin/model/request"
     "gin-vue-admin/model/response"
     "gin-vue-admin/admin/service"
-    "github.com/gin-gonic/gin"
+	"gin-vue-admin/utils"
+	"github.com/gin-gonic/gin"
     "go.uber.org/zap"
 )
 
@@ -21,6 +22,13 @@ import (
 func CreateAdConfig(c *gin.Context) {
 	var adConfig model.AdConfig
 	_ = c.ShouldBindJSON(&adConfig)
+
+	err := utils.ErrTrans(&adConfig)
+	if err != nil {
+		response.FailWithMessage(err.Error(), c)
+		return
+	}
+
 	if err := service.CreateAdConfig(adConfig); err != nil {
         global.GVA_LOG.Error("创建失败!", zap.Any("err", err))
 		response.FailWithMessage("创建失败", c)

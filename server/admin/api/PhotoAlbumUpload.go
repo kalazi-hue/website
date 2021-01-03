@@ -4,7 +4,6 @@ import (
 	"bytes"
 	"encoding/json"
 	"gin-vue-admin/admin/service"
-	"gin-vue-admin/config"
 	"gin-vue-admin/global"
 	"gin-vue-admin/model"
 	"gin-vue-admin/model/response"
@@ -24,7 +23,7 @@ import (
 // @Router /simpleUploader/upload [post]
 func PhotoAlbumUploaderUpload(c *gin.Context) {
 	var chunk model.ExaSimpleUploader
-	var uploadConfig config.Upload
+	uploadConfig := global.GVA_CONFIG.Upload
 	_, header, err := c.Request.FormFile("file")
 	chunk.Filename = c.PostForm("filename")
 	chunk.ChunkNumber = c.PostForm("chunkNumber")
@@ -96,7 +95,7 @@ func PhotoAlbumUploadMerge(c *gin.Context) {
 
 
 	//.上传内容处理
-	data.DstName, _ = service.PhotoMerge(data.Md5, data.FileName)//4e9002c48226e9c1d99ca40a02ea925b.jpg
+	data.DstName, _ = service.PhotoMerge(data.Md5, data.FileName, data.Title)//4e9002c48226e9c1d99ca40a02ea925b.jpg
 
 	//入库
 	err = service.PhotoSaveToDB(data)

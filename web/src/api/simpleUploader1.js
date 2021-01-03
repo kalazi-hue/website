@@ -12,7 +12,7 @@ import service from '@/utils/request'
 // @Router /simpleUploader/checkFileMd5 [get]
 export const checkFileMd5 = (params) => {
     return service({
-        url: "/simpleUploader1/checkFileMd5",
+        url: "/movieUpload/movieCheckMd5",
         method: 'get',
         params
     })
@@ -35,7 +35,7 @@ export const checkFileMd5 = (params) => {
 // }
 export const mergeFileMd5 = (data) => {
     return service({
-        url: "/simpleUploader1/mergeFileMd5",
+        url: "/movieUpload/movieMerge",
         method: 'post',
         data
     })

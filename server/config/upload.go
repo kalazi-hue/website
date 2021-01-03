@@ -7,5 +7,4 @@ type Upload struct {
 	VideoDomain			string `mapstructure:"video-domain" json:"videoUrl" yaml:"video-domain"`
 	VideoUploadPath		string `mapstructure:"video-upload-path" json:"videoUploadPath"  yaml:"video-upload-path"`
 	VideoChunkPath		string `mapstructure:"video-chunk-path" json:"videoChunkPath" yaml:"video-chunk-path"`
-
 }

@@ -11,7 +11,7 @@ type PhotoAlbum struct {
       Title  string `json:"title" form:"title" gorm:"column:title;comment:写真名称;type:varchar(200);size:200;"`
       Cover  string `json:"cover" form:"cover" gorm:"column:cover;comment:封面;type:varchar(200);size:200;"`
       Description  string `json:"description" form:"description" gorm:"column:description;comment:简介;type:varchar(200);size:200;"`
-      Type  int `json:"type" form:"type" gorm:"column:type;comment:类型;type:bigint;size:19;"`
+      Type  string `json:"type" form:"type" gorm:"column:type;comment:类型;type:varchar(50);size:50;"`
       Content  string `json:"content" form:"content" gorm:"column:content;comment:内容;type:text;"`
       Keyword  string `json:"keyword" form:"keyword" gorm:"column:keyword;comment:关键词;type:varchar(200);size:200;"`
       Is_top  *bool `json:"isTop" form:"isTop" gorm:"column:is_top;comment:is_top;type:tinyint;"`

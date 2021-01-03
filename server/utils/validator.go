@@ -218,6 +218,7 @@ func ErrTrans(s interface{}) error{
 	//验证器注册翻译器
 	err := zh_translations.RegisterDefaultTranslations(va, trans)
 	if err != nil {
+		return err
 	}
 	err = va.Struct(s)
 

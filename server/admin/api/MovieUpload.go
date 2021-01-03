@@ -23,6 +23,7 @@ import (
 // @Router /simpleUploader/upload [post]
 func MovieUploaderUpload(c *gin.Context) {
 	var chunk model.ExaSimpleUploader
+	uploadConfig := global.GVA_CONFIG.Upload
 	_, header, err := c.Request.FormFile("file")
 	chunk.Filename = c.PostForm("filename")
 	chunk.ChunkNumber = c.PostForm("chunkNumber")
@@ -30,7 +31,8 @@ func MovieUploaderUpload(c *gin.Context) {
 	chunk.Identifier = c.PostForm("identifier")
 	chunk.TotalSize = c.PostForm("totalSize")
 	chunk.TotalChunks = c.PostForm("totalChunks")
-	var chunkDir = "./chunk/" + chunk.Identifier + "/"
+
+	var chunkDir = uploadConfig.VideoChunkPath + chunk.Identifier + "/"
 	hasDir, _ := utils.PathExists(chunkDir)
 	if !hasDir {
 		if err := utils.CreateDir(chunkDir); err != nil {
@@ -59,7 +61,7 @@ func MovieUploaderUpload(c *gin.Context) {
 
 func MovieUploadMerge(c *gin.Context) {
 	buf := make([]byte, 1024)
-	data := new(service.PhotoAlbumUploader)
+	data := new(service.MovieUploader)
 	n, _ := c.Request.Body.Read(buf)
 	c.Request.Body = ioutil.NopCloser(bytes.NewBuffer(buf[:n]))
 	j := buf[0:n]
@@ -68,16 +70,24 @@ func MovieUploadMerge(c *gin.Context) {
 		global.GVA_LOG.Error("error", zap.Any("err", err))
 	}
 
-
 	//.上传内容处理
-	data.DstName, _ = service.MovieMerge(data.Md5, data.FileName)//4e9002c48226e9c1d99ca40a02ea925b.jpg
+	data.DstName, _ = service.MovieMerge(data.Md5, data.FileName, data.Title)
 
 	//入库
 	err = service.MovieSaveToDB(data)
 	if err != nil {
-		global.GVA_LOG.Error("入库失败!", zap.Any("err", err))
-		response.FailWithMessage("入库失败", c)
+		global.GVA_LOG.Error("影片视频入库失败!", zap.Any("err", err))
+		response.FailWithMessage("影片视频入库失败", c)
 		return
 	}
-	response.OkWithMessage("合并成功", c)
+	response.OkWithMessage("影片视频合并成功", c)
+}
+
+
+func MovieCheckMd5(c *gin.Context) {
+	//md5 := c.Query("md5")
+	response.OkWithDetailed(gin.H{
+		"chunks": 0,
+		"isDone": false,
+	},"查询成功", c)
 }

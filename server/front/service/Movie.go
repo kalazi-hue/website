@@ -22,7 +22,7 @@ func GetMovieInfoList(info request.MovieSearch) (err error, list interface{}, to
     var movies []model.Movie
     // 如果有条件搜索 下方会自动创建搜索语句
 
-    if info.Type != 0 {
+    if info.Type != "" {
         db = db.Where("`type` = ?",info.Type)
     }
     if info.IsRecommend != nil {
