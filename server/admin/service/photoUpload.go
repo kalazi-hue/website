@@ -2,9 +2,9 @@ package service
 
 import (
 	"fmt"
-	"gin-vue-admin/config"
 	"gin-vue-admin/global"
 	"gin-vue-admin/model"
+	"gin-vue-admin/utils"
 	"gorm.io/gorm"
 	"io/ioutil"
 	"os"
@@ -55,16 +55,22 @@ func SaveChunk(uploader model.ExaSimpleUploader) (err error) {
 //@param: md5 string, fileName string
 //@return: err error
 
-func PhotoMerge(md5 string, fileName string) (dstName string, err error) {
-	var uploadConfig  config.Upload
-	var now = global.MyTime(time.Now())
-	finishDir := uploadConfig.ImgUploadPath + now.String() + "/"
+func PhotoMerge(md5 string, fileName string, title string) (dstName string, err error) {
+	uploadConfig := global.GVA_CONFIG.Upload
+	var today = time.Now().Format("2006-01-02")
+	finishDir := uploadConfig.ImgUploadPath + today + "/" + utils.MD5V([]byte(title)) +"/"
+	global.GVA_LOG.Info("finishdir:"+finishDir)
 	chunkDir := uploadConfig.ImgChunkPath + md5
+	global.GVA_LOG.Info("chunkdir:"+chunkDir)
 	dstName = md5 + path.Ext(fileName)
+	dstNameWithDomain := uploadConfig.ImgDomain + finishDir + dstName
 
 	//打开切片文件夹
 	rd, err := ioutil.ReadDir(chunkDir)
-	_ = os.MkdirAll(finishDir, os.ModePerm)
+	err = os.MkdirAll(finishDir, os.ModePerm)
+	if err != nil {
+		global.GVA_LOG.Info("mkdir fail:" + finishDir)
+	}
 	//创建目标文件
 	fd, _ := os.OpenFile(finishDir+dstName, os.O_RDWR|os.O_CREATE|os.O_APPEND, 0644)
 	//将切片文件按照顺序写入
@@ -99,7 +105,7 @@ func PhotoMerge(md5 string, fileName string) (dstName string, err error) {
 	})
 
 	err = os.RemoveAll(chunkDir) //清除切片
-	return dstName,err
+	return dstNameWithDomain,err
 }
 
 func PhotoSaveToDB(up *PhotoAlbumUploader) (err error) {
@@ -122,7 +128,7 @@ func PhotoSaveToDB(up *PhotoAlbumUploader) (err error) {
 		}
 		data.Title = up.Title
 		data.Description =up.Desc
-		data.Type = 1
+		data.Type = up.Type
 		data.Status = &up.Status
 		data.Reads = 123
 		data.Is_top = &up.Status

@@ -90,6 +90,7 @@ func GetMovieInfoList(info request.MovieSearch) (err error, list interface{}, to
         db = db.Where("`status` = ?",info.Status)
     }
 	err = db.Count(&total).Error
-	err = db.Limit(limit).Offset(offset).Find(&movies).Error
+	err = db.Order("id desc").Limit(limit).Offset(offset).Find(&movies).Error
 	return err, movies, total
 }
+

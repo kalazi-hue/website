@@ -24,10 +24,10 @@
       <el-form :model="formData" ref="formData" label-position="right" label-width="80px">
         <el-form-item label="*影片类型">
           <el-select v-model="formData.type" placeholder="请选择类型">
-            <el-option label="国产" value="guochan"></el-option>
-            <el-option label="日韩" value="rihan"></el-option>
-            <el-option label="欧美" value="oumei"></el-option>
-            <el-option label="动漫" value="dongman"></el-option>
+            <el-option label="国产" value="国产"></el-option>
+            <el-option label="日韩" value="日韩"></el-option>
+            <el-option label="欧美" value="欧美"></el-option>
+            <el-option label="动漫" value="动漫"></el-option>
           </el-select>
         </el-form-item>
 
@@ -127,7 +127,7 @@
 var notUploadedChunks = []; // 已经上传过的文件chunkNumber数组
 var isUploaded = false; // 文件已经上传成功了
 import { mapGetters } from "vuex";
-import { checkFileMd5,mergeFileMd5 } from "@/api/simpleUploader";
+import { checkFileMd5,mergeFileMd5 } from "@/api/simpleUploader1";
 import SparkMD5 from "spark-md5";
 const path = process.env.VUE_APP_BASE_API;
 export default {
