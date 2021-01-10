@@ -3,6 +3,7 @@ module gin-vue-admin
 go 1.12
 
 require (
+	github.com/PuerkitoBio/urlesc v0.0.0-20170810143723-de5bf2ad4578
 	github.com/StackExchange/wmi v0.0.0-20190523213315-cbe66965904d // indirect
 	github.com/alecthomas/template v0.0.0-20190718012654-fb15b899a751
 	github.com/brianvoe/gofakeit/v5 v5.11.0

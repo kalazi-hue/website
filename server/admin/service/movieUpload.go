@@ -8,6 +8,7 @@ import (
 	"gin-vue-admin/utils"
 	"gorm.io/gorm"
 	"io/ioutil"
+	"net/url"
 	"os"
 	"path"
 	"strconv"
@@ -59,16 +60,23 @@ func MovieCheckFileMd5(md5 string) (err error, uploads []model.ExaSimpleUploader
 //@return: err error
 
 func MovieMerge(md5 string, fileName string, title string) (dstName string, err error) {
+	var finishDir,finishName string
+
 	uploadConfig := global.GVA_CONFIG.Upload
 	var today = time.Now().Format("2006-01-02")
-	finishDir := uploadConfig.VideoUploadPath + today + "/" + utils.MD5V([]byte(title)) +"/"
+	global.GVA_LOG.Error(path.Ext(fileName))
+	if path.Ext(fileName) == ".mp4" {
+		finishDir = uploadConfig.VideoUploadPath + today + "/" + utils.MD5V([]byte(title)) +"/origin/"
+		finishName = finishDir + "org" +path.Ext(fileName)
+	} else {
+		finishDir = uploadConfig.VideoUploadPath + today + "/" + utils.MD5V([]byte(title))
+		finishName = finishDir + "/cover.jpg"
+	}
 	//判断文件类型
 
-	global.GVA_LOG.Info("finishdir:"+finishDir)
 	chunkDir := uploadConfig.VideoChunkPath + md5
-	global.GVA_LOG.Info("chunkdir:"+chunkDir)
-	dstName = md5 + path.Ext(fileName)
-	dstNameWithDomain := uploadConfig.VideoDomain + finishDir + dstName
+	dstNameWithDomain := uploadConfig.VideoDomain + finishName
+
 
 	//打开切片文件夹
 	rd, err := ioutil.ReadDir(chunkDir)
@@ -77,7 +85,7 @@ func MovieMerge(md5 string, fileName string, title string) (dstName string, err 
 		global.GVA_LOG.Info("mkdir fail:" + finishDir)
 	}
 	//创建目标文件
-	fd, _ := os.OpenFile(finishDir+dstName, os.O_RDWR|os.O_CREATE|os.O_APPEND, 0644)
+	fd, _ := os.OpenFile(finishName, os.O_RDWR|os.O_CREATE|os.O_APPEND, 0644)
 	//将切片文件按照顺序写入
 	for k := range rd {
 		content, _ := ioutil.ReadFile(chunkDir + "/" + fileName + strconv.Itoa(k+1))
@@ -119,10 +127,10 @@ func MovieSaveToDB(up *MovieUploader) (err error) {
 	//var IsCreate = true
 	var now = global.MyTime(time.Now())
 	res := global.GVA_DB.Where("title", up.Title).Where( "type", up.Type).First(&movie)
-	global.GVA_LOG.Info(movie.Cover)
 	if res.RowsAffected > 0{
-		global.GVA_LOG.Info(">0")
-		global.GVA_LOG.Info(movie.Title)
+		//global.GVA_LOG.Info(">0")
+		//global.GVA_LOG.Info(movie.Title)
+
 		//IsCreate = false
 	}
 
@@ -143,10 +151,33 @@ func MovieSaveToDB(up *MovieUploader) (err error) {
 	}
 
 
-	err = global.GVA_DB.Model(&movie).Updates(map[string]interface{}{"play_url": up.DstName, "down_url": up.DstName}).Error
+	err = global.GVA_DB.Model(&movie).Updates(map[string]interface{}{"play_url": getPlayUrl(up.DstName), "down_url": up.DstName}).Error
+	//info := strconv.Itoa(int(movie.ID)) + "," + getDownPath(up.DstName)
+	info := strconv.Itoa(int(movie.ID)) + "," + up.DstName
+
+	global.GVA_LOG.Info(info)
+
+	global.GVA_REDIS.LPush("video-process", info).Result()
+	defer global.GVA_REDIS.Close()
+	//utils.SendMsgToGroup(info)
+
 	return err
 
 }
+
+func getPlayUrl(downUrl string) string {
+	s := strings.Split(downUrl, "origin")
+	//res, _ := url.Parse(downUrl)
+	return s[0] + "m3u8/index.m3u8"
+}
+
+func getDownPath(downUrl string) string {
+	res,_ := url.Parse(downUrl)
+	return res.Path
+}
+
+
+
 
 
 
