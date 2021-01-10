@@ -77,6 +77,7 @@ func MovieMerge(md5 string, fileName string, title string) (dstName string, err 
 	chunkDir := uploadConfig.VideoChunkPath + md5
 	dstNameWithDomain := uploadConfig.VideoDomain + finishName
 
+
 	//打开切片文件夹
 	rd, err := ioutil.ReadDir(chunkDir)
 	err = os.MkdirAll(finishDir, os.ModePerm)
@@ -129,6 +130,7 @@ func MovieSaveToDB(up *MovieUploader) (err error) {
 	if res.RowsAffected > 0{
 		//global.GVA_LOG.Info(">0")
 		//global.GVA_LOG.Info(movie.Title)
+
 		//IsCreate = false
 	}
 
@@ -158,6 +160,7 @@ func MovieSaveToDB(up *MovieUploader) (err error) {
 	global.GVA_REDIS.LPush("video-process", info).Result()
 	defer global.GVA_REDIS.Close()
 	//utils.SendMsgToGroup(info)
+
 	return err
 
 }
