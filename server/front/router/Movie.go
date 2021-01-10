@@ -14,6 +14,6 @@ func FrontMovieRouter(Router *gin.RouterGroup) {
 		MovieRouter.GET("getMovieListByTypeId", api.GetMovieListByTypeId)  // 首页->顶部分类->
 		MovieRouter.GET("getMovieListByTag", api.GetMovieListByTag)  //根据tag获取影片
 		MovieRouter.GET("getMovieListByKeyword", api.GetMovieListByKeyword)  //首页->关键词搜索影片
-
+		MovieRouter.POST("movieApproval", api.MovieApproval)//影片点赞
 	}
 }

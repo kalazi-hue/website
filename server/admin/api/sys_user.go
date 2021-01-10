@@ -31,7 +31,7 @@ func Login(c *gin.Context) {
 	if store.Verify(L.CaptchaId, L.Captcha, true) {
 		U := &model.SysUser{Username: L.Username, Password: L.Password}
 		if err, user := service.Login(U); err != nil {
-			global.GVA_LOG.Error("登陆失败! 用户名不存在或者密码错误", zap.Any("err", err))
+			global.GVA_LOG.Error("请正确填写登录信息登陆失败! 用户名不存在或者密码错误", zap.Any("err", err))
 			response.FailWithMessage("用户名不存在或者密码错误", c)
 		} else {
 			tokenNext(c, *user)

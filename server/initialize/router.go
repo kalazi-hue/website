@@ -23,7 +23,7 @@ func Routers() *gin.Engine {
 	// 跨域
 	Router.Use(middleware.Cors())
 	global.GVA_LOG.Info("use middleware cors")
-	docs.SwaggerInfo.Title = "啊啊啊啊"
+	docs.SwaggerInfo.Title = "API开发文档v1.1"
 	docs.SwaggerInfo.Description = "This is a sample server Petstore server."
 	docs.SwaggerInfo.Version = "2.0"
 	docs.SwaggerInfo.Host = "127.0.0.1:9999"
@@ -57,6 +57,7 @@ func Routers() *gin.Engine {
 	router.InitPhotoAlbumRouter(AdminGroup)			//写真
 	router.PhotoAlbumUploadRouter(AdminGroup)		//写真上传
 	router.MovieUploadRouter(AdminGroup)		//写真上传
+	router.InitPlayFeedbackRouter(AdminGroup)	//问题反馈
 	global.GVA_LOG.Info("admin router register success")
 
 	ApiGroup := Router.Group("api")
@@ -65,6 +66,7 @@ func Routers() *gin.Engine {
 	Fr.FrontTagRouter(ApiGroup)
 	Fr.FrontSystemConfigRouter(ApiGroup)
 	Fr.FrontPhotoAlbumRouter(ApiGroup)
+	Fr.FrontPlayFeedbackRouter(ApiGroup)
 	global.GVA_LOG.Info("api router register success")
 
 	return Router

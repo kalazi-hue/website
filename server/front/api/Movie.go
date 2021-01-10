@@ -121,7 +121,7 @@ func GetMovieListByTag(c *gin.Context) {
 
 
 // @Tags Movie
-// @Summary 首页，关键词收缩影片
+// @Summary 首页，关键词搜索影片
 // @accept application/json
 // @Produce application/json
 // @Param page 	query int true "page" default(1)
@@ -141,4 +141,16 @@ func GetMovieListByKeyword(c *gin.Context) {
 			PageSize: pageSize,
 		}, "获取成功", c)
 	}
+}
+
+
+// @Tags Movie
+// @Summary 影片点赞
+// @accept application/json
+// @Produce application/json
+// @Param id query int true "影片id" default(1000)
+// @Success 200 {string} string "{"success":true,"data":{},"msg":"操作成功"}"
+// @Router /movie/movieApproval [post]
+func MovieApproval(c *gin.Context) {
+	response.Ok(c)
 }

@@ -1,4 +1,22 @@
 basePath: /
+definitions:
+  model.PlayFeedback:
+    properties:
+      createdAt:
+        type: string
+      id:
+        type: integer
+      movieId:
+        type: integer
+      playUrl:
+        type: string
+      title:
+        type: string
+      type:
+        type: string
+      updatedAt:
+        type: string
+    type: object
 info:
   contact: {}
   description: This is a sample Server pets
@@ -91,7 +109,7 @@ paths:
           description: '{"success":true,"data":{},"msg":"获取成功"}'
           schema:
             type: string
-      summary: 首页，关键词收缩影片
+      summary: 首页，关键词搜索影片
       tags:
       - Movie
   /movie/getMovieListByTag:
@@ -187,6 +205,27 @@ paths:
       summary: 首页->「热门推荐」模块
       tags:
       - Movie
+  /movie/movieApproval:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - default: 1000
+        description: 影片id
+        in: query
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"success":true,"data":{},"msg":"操作成功"}'
+          schema:
+            type: string
+      summary: 影片点赞
+      tags:
+      - Movie
   /photoAlbum/getPhotoAlbumList:
     get:
       consumes:
@@ -251,6 +290,29 @@ paths:
       summary: 点击类型查询写真
       tags:
       - PhotoAlbum
+  /playFeedback/createPlayFeedback:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 创建PlayFeedback
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/model.PlayFeedback'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"success":true,"data":{},"msg":"获取成功"}'
+          schema:
+            type: string
+      security:
+      - ApiKeyAuth: []
+      summary: 创建PlayFeedback
+      tags:
+      - PlayFeedback
   /systemConfig/getSystemConfigList:
     get:
       consumes:

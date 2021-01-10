@@ -85,7 +85,7 @@ export default {
       }
     };
     const checkPassword = (rule, value, callback) => {
-      if (value.length < 6 || value.length > 12) {
+      if (value.length < 6 || value.length > 22) {
         return callback(new Error("请输入正确的密码"));
       } else {
         callback();

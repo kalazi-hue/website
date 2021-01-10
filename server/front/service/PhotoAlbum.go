@@ -42,10 +42,8 @@ func GetPhotoAlbumInfoList(info request.PhotoAlbumSearch) (err error, list inter
     if info.Is_top != nil {
         db = db.Where("`is_top` = ?",info.Is_top)
     }
-    if info.Status != nil {
-        db = db.Where("`status` = ?",info.Status)
-    }
+	db = db.Where("`status` = ? ", 1)
 	err = db.Count(&total).Error
-	err = db.Limit(limit).Offset(offset).Find(&photoAlbums).Error
+	err = db.Order("id desc").Limit(limit).Offset(offset).Find(&photoAlbums).Error
 	return err, photoAlbums, total
 }

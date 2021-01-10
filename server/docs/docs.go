@@ -120,7 +120,7 @@ var doc = `{
                 "tags": [
                     "Movie"
                 ],
-                "summary": "首页，关键词收缩影片",
+                "summary": "首页，关键词搜索影片",
                 "parameters": [
                     {
                         "type": "integer",
@@ -293,6 +293,38 @@ var doc = `{
                 }
             }
         },
+        "/movie/movieApproval": {
+            "post": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Movie"
+                ],
+                "summary": "影片点赞",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "default": 1000,
+                        "description": "影片id",
+                        "name": "id",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "{\"success\":true,\"data\":{},\"msg\":\"操作成功\"}",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
         "/photoAlbum/getPhotoAlbumList": {
             "get": {
                 "security": [
@@ -391,6 +423,44 @@ var doc = `{
                 }
             }
         },
+        "/playFeedback/createPlayFeedback": {
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "PlayFeedback"
+                ],
+                "summary": "创建PlayFeedback",
+                "parameters": [
+                    {
+                        "description": "创建PlayFeedback",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/model.PlayFeedback"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "{\"success\":true,\"data\":{},\"msg\":\"获取成功\"}",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
         "/systemConfig/getSystemConfigList": {
             "get": {
                 "security": [
@@ -478,6 +548,34 @@ var doc = `{
                             "type": "string"
                         }
                     }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "model.PlayFeedback": {
+            "type": "object",
+            "properties": {
+                "createdAt": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "movieId": {
+                    "type": "integer"
+                },
+                "playUrl": {
+                    "type": "string"
+                },
+                "title": {
+                    "type": "string"
+                },
+                "type": {
+                    "type": "string"
+                },
+                "updatedAt": {
+                    "type": "string"
                 }
             }
         }
