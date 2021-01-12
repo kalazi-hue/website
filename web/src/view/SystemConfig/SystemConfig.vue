@@ -33,7 +33,7 @@
 
 
       <el-table-column label="公告1" prop="notice" ></el-table-column>
-      <el-table-column label="公告2" prop="notice2" ></el-table-column>
+      <!-- <el-table-column label="公告2" prop="notice2" ></el-table-column> -->
 
       <el-table-column label="最新访问域名" prop="lastAccessDomain" ></el-table-column>
     

@@ -25,7 +25,7 @@
         <el-form-item label="图集类型">
           <el-select v-model="formData.type" placeholder="请选择类型">
             <el-option label="写真图集" value="写真"></el-option>
-            <el-option label="漫画图集" value="漫画"></el-option>
+            <!-- <el-option label="漫画图集" value="漫画"></el-option> -->
           </el-select>
         </el-form-item>
 

@@ -53,7 +53,7 @@
     <el-table-column prop="cover" label="图片" sortable width="120">
         <!--插入图片链接的代码-->
         <template slot-scope="scope">
-            <img :src="scope.row.url"  :title="scope.row.url" alt style="width: 100px;height: 20px" />
+            <img :src="scope.row.url"  :title="scope.row.url" alt style="width: 100%;min-height: 20px" />
         </template>
     </el-table-column>
 

@@ -59,19 +59,19 @@
     >
     <el-table-column type="selection" width="40"></el-table-column>
 
-    <el-table-column prop="title" label="名称" width="120" height="80" show-overflow-tooltip>
+    <el-table-column prop="title" label="名称" width="180" height="80" show-overflow-tooltip>
         <template slot-scope="scope">
             <p class="">{{scope.row.title}}</p>
         </template>
     </el-table-column>
     
-    <el-table-column prop="cover" label="封面图" sortable width="80">
+    <el-table-column prop="cover" label="封面图" width="80">
         <template slot-scope="scope">
             <img :src="scope.row.cover" :title="scope.row.cover" alt style="background-color: #ccc;width: 60px;height: 40px" />
         </template>
     </el-table-column>
  
-    <el-table-column prop="createdAt" label="创建日期" width="120" show-overflow-tooltip>
+    <el-table-column prop="createdAt" label="创建日期" sortable width="160" show-overflow-tooltip>
         <template slot-scope="scope">
             <p class="">{{scope.row.createdAt|formatDate}}</p>
         </template>
@@ -83,7 +83,7 @@
         </template>
     </el-table-column>
 
-    <el-table-column prop="content" label="影集内容" width="120" height="80" show-overflow-tooltip>
+    <el-table-column prop="content" label="影集内容" height="80" show-overflow-tooltip>
         <template slot-scope="scope">
             <p class="">{{scope.row.content}}</p>
         </template>
@@ -95,9 +95,9 @@
         </template>
     </el-table-column>
 
-    <el-table-column label="点击量" prop="reads" ></el-table-column> 
+    <el-table-column label="点击量" sortable prop="reads" width="100"></el-table-column> 
     
-   <el-table-column label="是否置顶" prop="isTop" >
+   <el-table-column label="是否置顶" prop="isTop" width="80">
       <template slot-scope="scope">
           <el-switch
             v-model="scope.row.isTop"
@@ -108,7 +108,7 @@
     </el-table-column>
     
     
-    <el-table-column label="是否上架" prop="status" >
+    <el-table-column label="是否上架" prop="status" width="80">
       <template slot-scope="scope">
           <el-switch
             v-model="scope.row.status"
@@ -118,7 +118,7 @@
       </template>
     </el-table-column>
 
-      <el-table-column label="操作">
+      <el-table-column label="操作" width="160">
         <template slot-scope="scope">
           <el-button class="table-button" @click="updatePhotoAlbum('',scope.row,'','')" size="small" type="primary" icon="el-icon-edit">编辑</el-button>
           <el-popover placement="top" width="160" v-model="scope.row.visible">
