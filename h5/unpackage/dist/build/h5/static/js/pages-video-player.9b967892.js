@@ -1,0 +1,1 @@
+(window["webpackJsonp"]=window["webpackJsonp"]||[]).push([["pages-video-player"],{e635:function(e,n,w){"use strict";var t;w.r(n);var a,l=function(){var e=this,n=e.$createElement,w=e._self._c||n;return w("v-uni-view",[e._v("wwwwww")])},r=[],u=w("f0c5"),c={},i=Object(u["a"])(c,l,r,!1,null,null,null,!1,t,a);n["default"]=i.exports}}]);

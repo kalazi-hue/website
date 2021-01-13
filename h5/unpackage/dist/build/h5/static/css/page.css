@@ -1,0 +1,90 @@
+
+  .no-data {
+    flex: 1;
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 10;
+  }
+
+  .page-news {
+    flex: 1;
+    flex-direction: column;
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+  }
+
+  .listview {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    /* #ifndef APP-NVUE */
+    display: flex;
+    flex-direction: column;
+    /* #endif */
+    /* #ifndef MP-ALIPAY */
+    flex-direction: column;
+    /* #endif */
+  }
+
+  .refresh {
+    justify-content: center;
+  }
+
+  .refresh-view {
+    /* #ifndef APP-NVUE */
+    display: flex;
+    /* #endif */
+    width: 750rpx;
+    height: 64px;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .refresh-icon {
+    width: 32px;
+    height: 32px;
+    transition-duration: .5s;
+    transition-property: transform;
+    transform: rotate(0deg);
+    transform-origin: 15px 15px;
+  }
+
+  .refresh-icon-active {
+    transform: rotate(180deg);
+  }
+
+  .loading-icon {
+    width: 28px;
+    height: 28px;
+    margin-right: 5px;
+    color: gray;
+  }
+
+  .loading-text {
+    margin-left: 2px;
+    font-size: 16px;
+    color: #999999;
+  }
+
+  .loading-more {
+    align-items: center;
+    justify-content: center;
+    padding-top: 14px;
+    padding-bottom: 14px;
+    text-align: center;
+  }
+
+  .loading-more-text {
+    font-size: 28upx;
+    color: #999;
+  }

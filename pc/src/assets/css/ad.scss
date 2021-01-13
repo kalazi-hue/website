@@ -1,0 +1,53 @@
+.ad-page {
+	a {
+		display: block;
+    margin-bottom: 8px;
+		height: 100px;
+		background-color: #4a4343;
+		img {
+			width: 100%;
+			height: 100%;
+		}
+	}
+}
+
+
+// ad-left-right
+.ad-side {
+	position: relative;
+	z-index: 9;
+	.left,
+	.right {
+		position: fixed;
+		top: 24%;
+		width: 150px;
+		height: 300px;
+		.el-icon-circle-close {
+	    font-size: 22px;
+	    color: #ce35e4;
+	    display: block;
+    	cursor: pointer;
+    	&:hover {
+    		color: #fff;
+    	}
+		}
+		a {
+			display: block;
+    	height: 100%;
+    	background-color: #222222;
+			img {
+				width: 100%;
+				height: 100%;
+			}
+		}
+	}
+	.left {
+		left: 0;
+	}
+	.right {
+		.el-icon-circle-close {
+	    text-align: right;
+		}
+		right: 0;
+	}
+}

@@ -1,0 +1,246 @@
+<template>
+  <view class="page-news">
+    <!-- #ifdef MP-QQ -->
+    <scroll-view class="listview" style="flex: 1;" enableBackToTop="true" scroll-y @scrolltolower="loadMore()">
+      <view v-for="(item, index) in dataList" :key="item.ID" @click="goDetail(item)">
+        <news-item :newsItem="item"></news-item>
+      </view>
+      <view class="loading-more" v-if="isLoading || dataList.length > 4">
+        <text class="loading-more-text">{{loadingText}}</text>
+      </view>
+    </scroll-view>
+    <!-- #endif -->
+    <!-- QQ multipleSlots=true bug -->
+    <!-- #ifndef MP-QQ -->
+    <uni-list class="listview" :enableBackToTop="true" :scroll-y="true" @scrolltolower="loadMore()">
+		
+      <uni-refresh class="refresh" @refresh="onrefresh" @pullingdown="onpullingdown" :display="refreshing ? 'show' : 'hide'">
+        <div class="refresh-view">
+          <image class="refresh-icon" :src="refreshIcon" :style="{width: (refreshing || pulling) ? 0: '32px'}" :class="{'refresh-icon-active': refreshFlag}"></image>
+          <uni-load-more v-if="refreshing" class="loading-icon" status="loading" :contentText="loadingMoreText"></uni-load-more>
+          <text class="loading-text">{{refreshText}}</text>
+        </div>
+      </uni-refresh>
+	  
+	  <uni-cell>
+		  <tagList />
+	  </uni-cell>
+	  
+	  <uni-cell>
+		  <view class="page-title">
+			<text class="title-txt">{{ pname }}列表</text>
+			<image src="/static/images/icons/bg-video.png" mode="widthFix" class="page-title-icons" style="width: 90px;height: 4px;"></image>
+		  </view>
+	  </uni-cell>
+	  
+      <uni-cell class="video-list" v-if="dataList.length > 0">
+		  <view v-for="(item, index) in dataList" :key="item.ID" class="list-item" :class="{'list-item-even': index % 2 === 0}" @click="goDetail(item)">
+			<news-item :newsItem="item"></news-item>			  
+		  </view>
+      </uni-cell>
+	  
+	  <uni-cell>
+		  <videoListLoading  v-if="dataList.length <= 0" /> <!-- 骨架屏 -->
+	  </uni-cell>
+	  
+      <uni-cell class="video-list">
+		  <view v-for="(item, index) in dataList" :key="item.ID" class="list-item" :class="{'list-item-even': index % 2 === 0}" @click="goDetail(item)">
+			<news-item :newsItem="item"></news-item>			  
+		  </view>
+      </uni-cell>
+	  
+      <uni-cell v-if="isLoading || dataList.length > 4">
+        <view class="loading-more">
+          <text class="loading-more-text">{{loadingText}}</text>
+        </view>
+      </uni-cell>
+	  
+    </uni-list>
+    <!-- #endif -->
+	
+    <no-data class="no-data" v-if="isNoData" @retry="loadMore"></no-data>
+  </view>
+</template>
+
+<script>
+  var _self
+  import {
+    friendlyDate
+  } from '@/common/util.js';
+
+  import api from '@/api'
+  import uniList from '@/components/uniapp/uni-list.vue';
+  import uniCell from '@/components/uniapp/uni-cell.vue';
+  import uniRefresh from '@/components/uniapp/uni-refresh.vue';
+  import uniLoadMore from '@/components/uniapp/uni-load-more.vue';
+  import noData from '@/components/nodata.nvue';
+  import newsItem from './news-item.nvue';
+  import tagList from '@/components/tags.vue';
+  import videoListLoading from '@/components/videoListLoading.vue';
+
+  export default {
+    components: {
+      uniList,
+      uniCell,
+      uniRefresh,
+      uniLoadMore,
+      noData,
+      newsItem,
+	  tagList,
+	  videoListLoading
+    },
+    props: {
+      nid: {
+        type: [Number, String],
+        default: ''
+      },
+      pname: {
+        type: [String],
+        default: ''
+      }
+    },
+    data() {
+      return {
+        dataList: [],
+        navigateFlag: false,
+        pulling: false,
+        refreshing: false,
+        refreshFlag: false,
+        refreshText: "",
+        isLoading: false,
+        loadingText: '加载中...',
+        isNoData: false,
+        pulling: false,
+        angle: 0,
+        loadingMoreText: {
+          contentdown: '',
+          contentrefresh: '',
+          contentnomore: ''
+        },
+        refreshIcon: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAMAAABg3Am1AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAB5QTFRFcHBw3Nzct7e39vb2ycnJioqK7e3tpqam29vb////D8oK7wAAAAp0Uk5T////////////ALLMLM8AAABxSURBVHja7JVBDoAgDASrjqj//7CJBi90iyYeOHTPMwmFZrHjYyyFYYUy1bwUZqtJIYVxhf1a6u0R7iUvWsCcrEtwJHp8MwMdvh2amHduiZD3rpWId9+BgPd7Cc2LIkPyqvlQvKxKBJ//Qwq/CacAAwDUv0a0YuKhzgAAAABJRU5ErkJggg=="
+      }
+    },
+    created() {
+		_self = this
+		this.pullTimer = null;
+		this.requestParams = {
+			page: 1,
+			pageSize: 10,
+			typeId: this.pname
+		}
+    },
+    methods: {
+      loadData(refresh) {
+		if (this.isLoading) {
+			return;
+		}
+		let data_List = []
+		this.isLoading = true;
+		this.isNoData = false;
+		uni.request({
+			method: 'GET',
+			url: `${ api.configApi }/movie/getMovieListByTypeId`,
+			data: this.requestParams,
+			success: (res) => {
+				const data = res.data.data.list
+				if (data.length <= 0) {
+					this.isLoading = false;
+					this.refreshing = false;
+					this.loadingText = '没有更多了'
+					return false
+				}
+				
+				if (refresh) {
+					this.requestParams.page = 1
+					this.dataList = data;
+				} else {
+					this.dataList = this.dataList.concat(data);
+					this.requestParams.page ++
+				}
+				this.isLoading = false;
+				this.refreshing = false;
+				uni.hideKeyboard();
+				// console.log(this.dataList)
+			},
+			fail: (err) => {
+				console.log(err);
+				if (_self.dataList.length == 0) {
+					_self.isNoData = true;
+				}
+				uni.hideKeyboard();
+			},
+			complete: (e) => {
+				_self.isLoading = false;
+				if (refresh) {
+					_self.refreshing = false;
+					_self.refreshFlag = false;
+					_self.refreshText = "已刷新";
+					if (_self.pullTimer) {
+						clearTimeout(_self.pullTimer);
+					}
+					_self.pullTimer = setTimeout(() => {
+						_self.pulling = false;
+					}, 1000);
+				}
+			}
+		});
+      },
+      loadMore(e) {
+        this.loadData();
+      },
+      clear() {
+        this.dataList.length = 0;
+        this.requestParams.minId = 0;
+      },
+      goDetail(item) {
+		  console.log(JSON.stringify(item))
+          uni.navigateTo({
+            url: '/pages/video/detail?query=' +JSON.stringify(item)
+          });
+      },
+      refreshData() {
+        if (this.isLoading) {
+          return;
+        }
+        this.pulling = true;
+        this.refreshing = true;
+        this.refreshText = "正在刷新...";
+        this.loadData(true);
+      },
+      onrefresh(e) {
+        this.refreshData();
+      },
+      onpullingdown(e) {
+        if (this.refreshing) {
+          return;
+        }
+
+        // var angle = (e.pullingDistance) / e.viewHeight * 180;
+        // if (angle > 180) {
+        // 	angle = 180;
+        // }
+        // tab.angle = angle;
+
+        this.pulling = false;
+        if (Math.abs(e.pullingDistance) > Math.abs(e.viewHeight)) {
+          this.refreshFlag = true;
+          this.refreshText = "释放立即刷新";
+        } else {
+          this.refreshFlag = false;
+          this.refreshText = "下拉可以刷新";
+        }
+      },
+      newGuid() {
+        let s4 = function() {
+          return (65536 * (1 + Math.random()) | 0).toString(16).substring(1);
+        }
+        return (s4() + s4() + "-" + s4() + "-4" + s4().substr(0, 3) + "-" + s4() + "-" + s4() + s4() + s4()).toUpperCase();
+      }
+    }
+  }
+</script>
+ 
+<style scoped>
+@import '@/static/css/videoList.css';	
+@import '@/static/css/page.css';	
+</style>

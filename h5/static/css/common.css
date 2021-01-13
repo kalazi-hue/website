@@ -1,0 +1,76 @@
+
+/* 背景颜色 */
+.photo-page,
+.wf-page,
+.banner-loading,
+.uni-page-head-search,
+.tabs,
+.player-bottom,
+.uni-drawer__content,
+.banner-container,
+.video-list-home,
+.ad-banner,
+.uni-body {
+	background-color: #333 !important;
+}
+
+/* 字体颜色 */
+.uni-input-input,
+.tag,
+.result,
+.menu-title,
+.tabbar-title,
+.uni-tab-item-title,
+.tab-bar,
+.list-date,
+.list-title,
+.list-playCount,
+.list-star,
+.title-txt {
+	color: #fff;
+	opacity: 0.9;
+}
+
+/* 图标颜色 */
+.ico-eye,
+.ico-like {
+    color: #8b79ff;	
+}
+
+/* 顶部 tabbar 黑暗主题 */
+.placeholder,
+.list-bottom-loading,
+.list-top,
+.hx-navbar__content,
+.tui-tabbar-item,
+.uni-tabbar,
+.tab-bar {
+    background-color: #141414 !important;	
+}
+ 
+/* 白色背景 */
+.aaaaaa {
+    background-color: #fff;
+}
+
+.page-title {
+	font-size: 44rpx;
+	padding: 10rpx 0 0 30rpx;
+    width: 180rpx;
+	/* #ifndef APP-PLUS */
+    box-sizing: initial !important;
+	/* #endif */
+	margin-bottom: -2px;
+}
+.page-title-icons {
+	margin-top: 15rpx;
+	/* #ifndef APP-PLUS */
+	display: flex;
+	/* #endif */
+}
+.video-list {
+	border-top-width: 1px;
+	border-top-style: solid;
+	border-top-color: #666;	
+}
+
