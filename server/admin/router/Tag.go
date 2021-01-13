@@ -15,5 +15,6 @@ func InitTagRouter(Router *gin.RouterGroup) {
 		TagRouter.PUT("updateTag", api.UpdateTag)    // 更新Tag
 		TagRouter.GET("findTag", api.FindTag)        // 根据ID获取Tag
 		TagRouter.GET("getTagList", api.GetTagList)  // 获取Tag列表
+		TagRouter.GET("getAllTagList", api.GetAllTagList) //获取所有tag列表
 	}
 }

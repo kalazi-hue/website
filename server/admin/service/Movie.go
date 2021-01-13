@@ -94,3 +94,5 @@ func GetMovieInfoList(info request.MovieSearch) (err error, list interface{}, to
 	return err, movies, total
 }
 
+
+

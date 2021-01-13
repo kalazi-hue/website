@@ -18,8 +18,6 @@ import (
 // @Success 200 {string} string "{"success":true,"data":{},"msg":"获取成功"}"
 // @Router /playFeedback/createPlayFeedback [post]
 func CreatePlayFeedback(c *gin.Context) {
-	response.OkWithMessage("创建成功", c)
-	return
 	var playFeedback model.PlayFeedback
 	_ = c.ShouldBindJSON(&playFeedback)
 	if err := service.CreatePlayFeedback(playFeedback); err != nil {

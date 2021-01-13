@@ -77,7 +77,7 @@ func GetMovieListByTypeId(c *gin.Context) (err error, list interface{}, total in
 	var typeId string
 	page, _ = strconv.Atoi(c.DefaultQuery("page", "1"))
 	pageSize, _ = strconv.Atoi(c.DefaultQuery("pageSize", "10"))
-	typeId = c.DefaultQuery("typeId", "1")
+	typeId = c.DefaultQuery("typeId", "")
 	limit := pageSize
 	offset := pageSize * (page - 1)
 
@@ -85,7 +85,11 @@ func GetMovieListByTypeId(c *gin.Context) (err error, list interface{}, total in
 	db := global.GVA_DB.Model(&model.Movie{})
 	var movies []model.Movie
 	// 如果有条件搜索 下方会自动创建搜索语句
-	db = db.Where("`status` = ? and `type` = ?", 1, typeId)
+	if typeId == "" {
+		db = db.Where("`status` = ?", 1)
+	} else {
+		db = db.Where("`status` = ? and `type` = ?", 1, typeId)
+	}
 
 	err = db.Count(&total).Error
 	err = db.Order("shelf_time desc, id desc").Limit(limit).Offset(offset).Find(&movies).Error

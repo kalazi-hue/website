@@ -153,7 +153,16 @@ func GetMovieListByKeyword(c *gin.Context) {
 // @Success 200 {string} string "{"success":true,"data":{},"msg":"操作成功"}"
 // @Router /movie/movieApproval [post]
 func MovieApproval(c *gin.Context) {
-	response.Ok(c)
+	var movie model.Movie
+	_ = c.ShouldBindJSON(&movie)
+
+	db := global.GVA_DB.Where("id = ?", movie.ID).First(&movie)
+	if err := db.Update("star", movie.Star + 1).Error; err != nil {
+		global.GVA_LOG.Error("更新失败!", zap.Any("err", err))
+		response.FailWithMessage("更新失败", c)
+	} else {
+		response.OkWithMessage("更新成功", c)
+	}
 }
 
 
