@@ -1,0 +1,46 @@
+<template>
+	<view v-if="newsItem.status">
+		<view class="list-top">
+			<image :src="newsItem.cover" mode="scaleToFill" class="list-img"></image>
+			<view class="shadow"></view>
+			<text class="list-date">{{ newsItem.createdAt.split(' ')[0] }}</text>
+		</view>
+		<text class="list-title">{{ newsItem.title }}</text>
+		<view class="list-bottom">
+			<view class="list-playCount">
+				<image src="/static/images/icons/ico-eye.png" mode="widthFix" class="ico-eye"></image>
+				<text class="text-views">{{ newsItem.playCount }}次播放</text>
+			</view>
+			<view class="list-star">
+				<image src="/static/images/icons/ico-like.png" mode="widthFix" class="ico-like"></image>
+				<text class="text-views">{{ newsItem.star }}</text>
+			</view>
+		</view>
+	</view>
+</template>
+
+<script>
+export default {
+    props: {
+		newsItem: {
+			type: Object,
+			default: function(e) {
+				return {}
+			}
+		}
+    },
+	data() {
+		return {
+		}
+	},
+	created () {
+	},
+    methods: {
+    }
+}
+</script>
+ 
+<style >
+@import '@/static/css/videoList.css';	
+ </style>
+ 

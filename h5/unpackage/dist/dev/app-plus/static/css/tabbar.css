@@ -1,0 +1,97 @@
+
+  /* #ifndef APP-PLUS */
+  page {
+    width: 100%;
+    min-height: 100%;
+    display: flex;
+  }
+
+  /* #endif */
+
+  .tabs {
+    flex: 1;
+    flex-direction: column;
+    overflow: hidden;
+    /* #ifdef MP-ALIPAY || MP-BAIDU */
+    height: 100vh;
+    /* #endif */
+  }
+
+  .tab-bar {
+    /* #ifdef APP-PLUS */
+    width: 750rpx;
+    /* #endif */
+    height: 42px;
+    flex-direction: row;
+	/* background-color: #4d4d4d; */
+  }
+
+  /* #ifndef APP-NVUE */
+  .tab-bar ::-webkit-scrollbar {
+    display: none;
+    width: 0 !important;
+    height: 0 !important;
+    -webkit-appearance: none;
+    background: transparent;
+  }
+
+  /* #endif */
+
+  .scroll-view-indicator {
+    position: relative;
+    height: 2px;
+    background-color: transparent;
+  }
+
+  .scroll-view-underline {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 0;
+    background-color: #007AFF;
+  }
+
+  .scroll-view-animation {
+    transition-duration: 0.2s;
+    transition-property: left;
+  }
+  
+  .tab-box {
+    flex: 1;
+  }
+
+  .uni-tab-item {
+    /* #ifndef APP-PLUS */
+    display: inline-block;
+    /* #endif */
+    flex-wrap: nowrap;
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  .uni-tab-item-title {
+    font-size: 15px;
+    height: 40px;
+    line-height: 40px;
+    flex-wrap: nowrap;
+	opacity: .6;
+  }
+
+  .uni-tab-item-title-active {
+	  opacity: 1;
+  }
+
+  .swiper-item {
+    flex: 1;
+    flex-direction: column;
+  }
+
+  .page-item {
+    flex: 1;
+    flex-direction: row;
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+  }

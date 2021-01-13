@@ -1,0 +1,78 @@
+<template>
+	<view>
+		<view class="title">
+			22222222222
+		</view>
+		
+		<view>
+			<view class="tui-skeleton">
+				<image src="/static/images/bg-comingsoon.png" style="width: 100%;height:375rpx" mode="widthFix" class="tui-skeleton-rect"></image>
+			</view>
+		</view>
+	
+		<!--左边栏 -->
+		<unidrawer ref="draw" :mask="mask" :width="drawWid" :mode='mode'>
+			<image src="/static/images/icons/ico-close.png" 
+				@click="closeDrawer()" 
+				mode="widthFix" 
+				style="width: 60rpx;height: 60rpx;position: absolute;left: 160px;top: 30rpx;z-index: 99;">
+			</image>
+			<leftMenu />
+		</unidrawer>
+		
+	</view>
+</template>
+
+<script>
+	import unidrawer from '@/components/uniapp/uni-drawer.vue';
+	import leftMenu from '@/components/leftMenu.vue';
+	export default {
+		components: {
+			unidrawer,
+			leftMenu
+		},
+		data() {
+			return {
+				mask: true,
+				left: 'left',
+				drawWid: 200,
+				maskClick: true,
+				mode: 'left',
+				skeletonShow:true
+			}
+		},
+		onLoad() {
+			//模拟
+			setTimeout(() => {
+				this.skeletonShow = false;
+			}, 1800);
+		},
+		methods: {
+			openDrawer () {
+				this.$refs.draw.open();
+			},
+			closeDrawer () {
+				this.$refs.draw.close();		
+			},
+			toPath(path){
+				uni.navigateTo({
+					url: path
+				});
+			}
+		},
+		onNavigationBarButtonTap(e) { // 监听原生标题栏按钮点击事件
+			console.log("点击了自定义按钮", e.index);
+			if (e.index === 0) { // 顶部左边菜单
+				 this.openDrawer()
+			} else if (e.index === 1) {  // 顶部右边搜索
+				uni.navigateTo({
+					url: '/pages/video/search'
+				});
+			}
+		}
+	}
+</script>
+
+
+<style scoped>
+</style>

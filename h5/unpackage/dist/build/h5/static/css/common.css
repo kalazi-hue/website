@@ -1,0 +1,60 @@
+/* 背景颜色 */
+.tabs,
+.tui-drawer-container,
+.banner-container,
+.video-list-home,
+.ad-banner,
+.uni-body {
+	background-color: #333 !important;
+}
+
+/* 字体颜色 */
+.tabbar-title,
+.uni-tab-item-title,
+.tab-bar,
+.list-date,
+.list-title,
+.list-playCount,
+.list-star,
+.page-title {
+	color: #fff;
+	opacity: 0.9;
+}
+
+/* 顶部 tabbar 黑暗主题 */
+.hx-navbar__content,
+.tui-tabbar-item,
+/* .tui-tabbar, */
+/* .tui-navigation-bar, */
+.uni-page-head,
+.uni-tabbar,
+.tab-bar {
+    background-color: #141414 !important;	
+}
+
+/* 顶部 tabbar 白色主题 */
+.hx-navbar__content {
+    background-color: #fff !important;	
+}
+
+.uni-body {
+    /* padding-top: 44px; */
+    /* padding-bottom: 80px; */
+}
+
+.page-title {
+	font-size: 44rpx;
+	padding: 30rpx 0 20rpx 30rpx;
+    width: 180rpx;
+	/* #ifndef APP-PLUS */
+	background-image: url(/static/images/icons/ico-line.png);
+	background-repeat: no-repeat;
+	background-position: 30rpx bottom;
+    background-size: contain;
+	/* #endif */
+}
+.video-list {
+	border-top-width: 1px;
+	border-top-style: solid;
+	border-top-color: #666;	
+}
