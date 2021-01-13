@@ -3,7 +3,6 @@ package model
 
 import (
       "gin-vue-admin/global"
-      "time"
 )
 
 // 如果含有time.Time 请自行import time包
@@ -17,11 +16,11 @@ type Movie struct {
       DownUrl  string `json:"downUrl" form:"downUrl" gorm:"column:down_url;comment:下载链接;type:varchar(200);size:200;"`
       Type  string `json:"type" form:"type" gorm:"column:type;comment:影片类型;type:varchar;size:50;"`
       Tags  string `json:"tags" form:"tags" gorm:"column:tags;comment:标签;type:varchar(200);size:200;"`
-      Star  int `json:"star" form:"star" gorm:"column:star;comment:点赞数;type:bigint;size:19;"`
-      PlayCount  int `json:"playCount" form:"playCount" gorm:"column:play_count;comment:观影次数;type:bigint;size:19;"`
+      Star  int32 `json:"star" form:"star" gorm:"column:star;comment:点赞数;type:bigint;size:19;"`
+      PlayCount  int32 `json:"playCount" form:"playCount" gorm:"column:play_count;comment:观影次数;type:bigint;size:19;"`
       IsTop  *bool `json:"isTop" form:"isTop" gorm:"column:is_top;comment:是否置顶;type:tinyint;"`
       IsRecommend  *bool `json:"isRecommend" form:"isRecommend" gorm:"column:is_recommend;comment:是否推荐;type:tinyint;"`
-      ShelfTime  time.Time `json:"shelfTime" form:"shelfTime" gorm:"column:shelf_time;comment:上架时间;type:datetime;"`
+      ShelfTime  global.MyTime `json:"shelfTime" form:"shelfTime" gorm:"column:shelf_time;comment:上架时间;type:datetime;"`
       Status  *bool `json:"status" form:"status" gorm:"column:status;comment:是否上架;type:tinyint;"`
 }
 
@@ -29,6 +28,4 @@ type Movie struct {
 func (Movie) TableName() string {
   return "movie"
 }
-
-
 

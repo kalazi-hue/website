@@ -59,14 +59,15 @@ func PhotoMerge(md5 string, fileName string, title string) (dstName string, err 
 	uploadConfig := global.GVA_CONFIG.Upload
 	var today = time.Now().Format("2006-01-02")
 	finishDir := uploadConfig.ImgUploadPath + today + "/" + utils.MD5V([]byte(title)) +"/"
-	global.GVA_LOG.Info("finishdir:"+finishDir)
+	//global.GVA_LOG.Info("finishdir:"+finishDir)
 	chunkDir := uploadConfig.ImgChunkPath + md5
-	global.GVA_LOG.Info("chunkdir:"+chunkDir)
+	//global.GVA_LOG.Info("chunkdir:"+chunkDir)
 	dstName = md5 + path.Ext(fileName)
 	dstNameWithDomain := uploadConfig.ImgDomain + finishDir + dstName
 
 	//打开切片文件夹
 	rd, err := ioutil.ReadDir(chunkDir)
+
 	err = os.MkdirAll(finishDir, os.ModePerm)
 	if err != nil {
 		global.GVA_LOG.Info("mkdir fail:" + finishDir)
@@ -115,8 +116,8 @@ func PhotoSaveToDB(up *PhotoAlbumUploader) (err error) {
 	var now = global.MyTime(time.Now())
 	res := global.GVA_DB.Where("title", up.Title).Where( "description", up.Desc).First(&photoAlbum)
 	if res.RowsAffected > 0{
-		global.GVA_LOG.Info(">0")
-		global.GVA_LOG.Info(photoAlbum.Title)
+		//global.GVA_LOG.Info(">0")
+		//global.GVA_LOG.Info(photoAlbum.Title)
 		IsCreate = false
 	}
 
@@ -130,7 +131,7 @@ func PhotoSaveToDB(up *PhotoAlbumUploader) (err error) {
 		data.Description =up.Desc
 		data.Type = up.Type
 		data.Status = &up.Status
-		data.Reads = 123
+		data.Reads = utils.GetRandInt()
 		data.Is_top = &up.Status
 		data.Keyword = strings.Join(up.Keywords, ",")
 		data.CreatedAt = now

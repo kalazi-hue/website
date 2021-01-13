@@ -3,6 +3,7 @@ package api
 import (
 	"gin-vue-admin/front/service"
 	"gin-vue-admin/global"
+	"gin-vue-admin/model"
 	"gin-vue-admin/model/request"
 	"gin-vue-admin/model/response"
 	"github.com/gin-gonic/gin"
@@ -153,4 +154,17 @@ func GetMovieListByKeyword(c *gin.Context) {
 // @Router /movie/movieApproval [post]
 func MovieApproval(c *gin.Context) {
 	response.Ok(c)
+}
+
+
+func MovieInfoUpdate(c *gin.Context) {
+	var movie model.Movie
+	db := global.GVA_DB.Where("id = ?", c.Query("id")).First(&movie)
+	if err := db.Update("play_time", c.Query("duration")).Error; err != nil {
+		global.GVA_LOG.Error("更新失败!", zap.Any("err", err))
+		response.FailWithMessage("更新失败", c)
+	} else {
+		response.OkWithMessage("更新成功", c)
+	}
+
 }

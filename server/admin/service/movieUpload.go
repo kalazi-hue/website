@@ -8,7 +8,6 @@ import (
 	"gin-vue-admin/utils"
 	"gorm.io/gorm"
 	"io/ioutil"
-	"net/url"
 	"os"
 	"path"
 	"strconv"
@@ -146,16 +145,21 @@ func MovieSaveToDB(up *MovieUploader) (err error) {
 		data.Tags = strings.Join(up.Tag, ",")
 		data.CreatedAt = now
 		data.UpdatedAt = now
+		if up.Status {
+			data.ShelfTime = now
+		}
+		data.Star = utils.GetRandInt()
+		data.PlayCount = utils.GetRandInt()
 		err = global.GVA_DB.Create(&data).Error
 		return err
 	}
 
 
-	err = global.GVA_DB.Model(&movie).Updates(map[string]interface{}{"play_url": getPlayUrl(up.DstName), "down_url": up.DstName}).Error
+	err = global.GVA_DB.Model(&movie).Updates(map[string]interface{}{"play_url": getPlayUrl(up.DstName), "down_url": getDownPath(up.DstName)}).Error
 	//info := strconv.Itoa(int(movie.ID)) + "," + getDownPath(up.DstName)
 	info := strconv.Itoa(int(movie.ID)) + "," + up.DstName
 
-	global.GVA_LOG.Info(info)
+	//global.GVA_LOG.Info(info)
 
 	global.GVA_REDIS.LPush("video-process", info).Result()
 	defer global.GVA_REDIS.Close()
@@ -172,8 +176,8 @@ func getPlayUrl(downUrl string) string {
 }
 
 func getDownPath(downUrl string) string {
-	res,_ := url.Parse(downUrl)
-	return res.Path
+	s := strings.Split(downUrl, "origin")
+	return s[0] + "compress/compress.mp4"
 }
 
 

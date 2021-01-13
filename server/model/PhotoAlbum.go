@@ -15,7 +15,7 @@ type PhotoAlbum struct {
       Content  string `json:"content" form:"content" gorm:"column:content;comment:内容;type:text;"`
       Keyword  string `json:"keyword" form:"keyword" gorm:"column:keyword;comment:关键词;type:varchar(200);size:200;"`
       Is_top  *bool `json:"isTop" form:"isTop" gorm:"column:is_top;comment:is_top;type:tinyint;"`
-      Reads  int `json:"reads" form:"reads" gorm:"column:reads;comment:点击量;type:bigint;"`
+      Reads  int32 `json:"reads" form:"reads" gorm:"column:reads;comment:点击量;type:bigint;"`
       Status  *bool `json:"status" form:"status" gorm:"column:status;comment:是否上架;type:tinyint;"`
 }
 
