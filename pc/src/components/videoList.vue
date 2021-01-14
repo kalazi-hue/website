@@ -2,7 +2,7 @@
 	<div class="video-list">
     <h2 class="title"><i></i>{{ title }}</h2>
 		<ul class="list">
-      <li v-for="(list, index) in videoList" @click="goPlayer(list)" :key="index" v-if="list.status">
+      <li v-for="(list, index) in videoList" @click="goPlayer(list.ID)" :key="index" v-if="list.status">
         <div class="img">
           <div class="overlay"><i class="ico-play"></i></div>
           <img v-lazy="list.cover" alt="">
@@ -50,7 +50,7 @@ export default {
       videoList: [],
 			totalPage: 0,
       page: 1,
-      pageSize: 8,
+      pageSize: 16,
 		}
 	},
 	created () {
@@ -65,7 +65,6 @@ export default {
       this.getMovieListByTypeId()
     },
     getMovieListByTypeId (type) {
-      console.log(this.$route.path)
       let params = {
         page: this.page,
         pageSize: this.pageSize,
@@ -78,18 +77,20 @@ export default {
         // console.log(this.totalPage)
       })
     },
-    goPlayer (item) {
-      sessionStorage.setItem('videoDetail', JSON.stringify(item))
+    goPlayer (vid) {
       this.$router.push({
-        path: `/pages/video/detail/${item.ID}`
+        path: `/pages/movie/detail?videoId=${vid}`
       })
     },
     backtop () {
       document.documentElement.scrollTop = document.body.scrollTop = 0
     },
     getPath () {
-      if (this.$route.path.indexOf('/pages/video/') > -1) {
+      if (this.$route.path.indexOf('/pages/movie/') > -1) {
         this.typeid = this.$route.query.typeid
+        if (this.typeid === '最新') { // 最新列表传空
+          this.typeid = ''
+        }
         this.getMovieListByTypeId()
         this.getTitle()     
       }
@@ -97,7 +98,7 @@ export default {
     getTitle () {
       let _this = this
       menus.list.forEach(item=> {
-        if (Number(_this.$route.query.typeid) === Number(item.typeid)) {
+        if (_this.$route.query.typeid === item.title) {
           _this.title = item.title
         }
       })   

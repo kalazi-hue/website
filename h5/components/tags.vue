@@ -5,7 +5,7 @@
 			<text class="title-txt">热门标签</text>
 		</view>
 		<view class="tag-list">
-			<text class="tag" v-for="item in tagList" @click="toSearch(item.name)" :key="item.ID" v-if="tagList.length > 0 && item.status"> #{{ item.name }}</text>
+			<text class="tag" v-for="item in tagList" @click="toSearch(item.name)" :key="item.ID" v-if="tagList.length > 0 && item.status"> {{ item.name }}</text>
 			<text class="tag tag-loading" v-for="item in 1" v-else></text>
 		</view>
 	</view>
@@ -26,7 +26,7 @@ export default {
   methods: {
 	toSearch (name) {
 		uni.navigateTo({
-			url: '/pages/video/search?tag=' + name
+			url: '/pages/movie/search?tag=' + name
 		});
 	},
 	// 获取标签列表
@@ -81,7 +81,7 @@ export default {
 	/* #ifndef APP-NVUE */
 	display: flex;
 	/* #endif */
-	justify-content: flex-start;
+	justify-content: space-between;
     flex-direction: row;
 	flex-wrap: wrap;
     margin: 0;
@@ -93,7 +93,7 @@ export default {
 	border-color: #d03fe5;
 	font-size: 26rpx;
 	text-align: center;
-	margin: 0 10rpx 20rpx 0;
+	margin: 0 0 20rpx 0;
     lines: 1;
     text-overflow: ellipsis;
     background-color: #603d65;

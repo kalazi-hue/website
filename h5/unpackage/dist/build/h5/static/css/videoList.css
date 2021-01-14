@@ -1,4 +1,13 @@
-
+.iconfont{
+    font-family:"iconfont" !important;
+    font-size:16px;
+	font-style:normal;
+    /* #ifndef APP-NVUE */
+    -webkit-font-smoothing: antialiased;
+    -webkit-text-stroke-width: 0.2px;
+    -moz-osx-font-smoothing: grayscale;
+    /* #endif */
+}
 .video-list {
     /* #ifndef APP-NVUE */
     display: flex;
@@ -14,10 +23,10 @@
 .list-item-even {
 	margin: 0 30rpx 30rpx 30rpx;	
 }
+
 .list-top {
 	height: 222rpx;
 	border-radius: 5px;
-    background-color: #666;
 	position: relative !important;
 }
 .list-img {
@@ -31,8 +40,11 @@
     white-space: nowrap;
     /* #endif */
     overflow: hidden;
-    text-overflow: ellipsis;
 	font-size: 28rpx;
+    /* #ifdef APP-NVUE */
+	lines:1;
+    /* #endif */
+	text-overflow:ellipsis;
 }
 .shadow {
 	background-image: url(/static/images/shadow.png);
@@ -46,7 +58,7 @@
     position: absolute;
     bottom: 10rpx;	
 	right: 20rpx;
-	opacity: .6;
+	opacity: .8;
 }
 .list-bottom {
     /* #ifndef APP-NVUE */
@@ -58,19 +70,21 @@
 }
 .list-playCount,
 .list-star {
+    /* #ifndef APP-NVUE */
+    display: flex;
+    /* #endif */
+    flex-direction: row;
+    align-items: center;
+}
+.ico-eye {
+	width: 38rpx;
+	margin-right: 10rpx;
+}
+.ico-like {
+	width: 24rpx;
+	margin-right: 10rpx;
+}
+.text-views {
 	font-size: 24rpx;
-	color: #999;
+	color: #999;	
 }
-/* .list-playCount {
-	padding-left: 56rpx;
-    height: 26rpx;
-    line-height: 26rpx;
-    background: url(/static/images/icons/ico-eye.png) no-repeat;
-    background-size: contain;
-}
-.list-star {
-	padding-left: 40rpx;
-    height: 30rpx;
-	background: url(/static/images/icons/ico-like.png) no-repeat;
-    background-size: contain;
-} */

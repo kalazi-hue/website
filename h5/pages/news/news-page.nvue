@@ -184,7 +184,7 @@
           })
         } else {
           uni.navigateTo({
-            url: '/pages/video/detail?query=' + encodeURIComponent(JSON.stringify(detail))
+            url: '/pages/movie/detail?query=' + encodeURIComponent(JSON.stringify(detail))
           });
         }
       },

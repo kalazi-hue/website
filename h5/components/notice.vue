@@ -26,7 +26,8 @@ export default {
   data() {
 		return {
 			configList: [],
-			noticeContent: ''
+			noticeContent: '',
+			androidUrl: null
 		}
   },
 	mounted () {
@@ -53,6 +54,68 @@ export default {
 						that.noticeContent = that.configList[0].notice
 					} else {
 						that.close()						
+					}
+					if (uni.getSystemInfoSync().platform === 'android') {
+						if (that.configList[0].notice2.indexOf('.apk') > -1) { // 安卓apk存在
+							that.androidUrl = that.configList[0].notice2
+							that.AndroidCheckUpdate(that.androidUrl) // 检测更新
+							//#ifndef H5
+							_this.AndroidCheckUpdate(_this.androidUrl) // 检测更新
+							//#endif
+						}
+					}
+				}
+			});
+		},
+		AndroidCheckUpdate (androidUrl) {  // 安卓提醒用户更新 
+			let newVersion = 0
+			newVersion = androidUrl.split('_')[1].split('.apk')[0]
+			plus.runtime.getProperty(plus.runtime.appid, function(wgtinfo){
+				if (newVersion != wgtinfo.version) {
+					uni.showModal({
+						title: '发现新版本',
+						confirmText: '本地更新',
+						cancelText: '浏览器下载',
+						content: '目前版本过低，请更新至最新版本 v' + newVersion,
+						success: function (res) {
+							if (res.confirm) {
+								_this.doUpData()
+							} else if (res.cancel) {
+								plus.runtime.openURL(androidUrl);
+							}
+						}
+					});
+				}
+			});
+		},
+		doUpData() { // 执行更新下载
+			uni.showLoading({
+				title: '更新中,请等待……'
+			})
+			uni.downloadFile({//执行下载
+				url: this.androidUrl, //下载地址
+				success: downloadResult => {//下载成功
+					uni.hideLoading();
+					if (downloadResult.statusCode == 200) {
+						uni.showModal({
+							title: '',
+							content: '更新成功，确定现在重启吗？',
+							confirmText: '重启',
+							confirmColor: '#EE8F57',
+							success: function(res) {
+								if (res.confirm == true) {
+									plus.runtime.install(//安装
+										downloadResult.tempFilePath, {
+											force: true
+										},
+										function(res) {
+											utils.showToast('更新成功，重启中');
+											plus.runtime.restart();
+										}
+									);
+								}
+							}
+						});
 					}
 				}
 			});

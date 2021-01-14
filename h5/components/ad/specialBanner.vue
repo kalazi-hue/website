@@ -1,6 +1,6 @@
 <template>
   <div class="banner-container">
-    <swiper :style="{width: '100vw', height: '450rpx'}" 
+    <swiper :style="{width: '100vw', height: '400rpx'}" 
       :indicator-dots="swiperConfig.indicatorDots" 
       :indicator-color="swiperConfig.indicatorColor" 
       :indicator-active-color="swiperConfig.indicatorActiveColor"
@@ -127,7 +127,7 @@ export default {
 }
 .slide-image {
 	width: 550rpx;
-	height: 308rpx;
+	height: 260rpx;
 	z-index: 200;
 	/* #ifndef APP-NVUE */
 	border-radius: 6px;

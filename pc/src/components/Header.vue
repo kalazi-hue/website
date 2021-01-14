@@ -6,7 +6,7 @@
       </h1>
       <div class="menus">
         <ul>
-          <li v-for="(item, index) in menuList" @click="toDtail(item.typeid,item.title)" :class='{active:item.typeid === activeId}' :key="index"> {{ item.title }}</li>
+          <li v-for="(item, index) in menuList" @click="toDtail(item.typeid,item.title)" :class='{active:item.title === activeTitle}' :key="index"> {{ item.title }}</li>
         </ul>
       </div>
       <div class="search">
@@ -28,7 +28,7 @@ export default {
   data () {
     return {
       keywords: '',
-      activeId: 0,
+      activeTitle: '首页',
       token: '',
       menuList: []
     }
@@ -36,7 +36,20 @@ export default {
   mounted () {
   },
   created () {
-    this.menuList = menus.list
+    setTimeout(() => {
+      this.menuList = menus.list
+      if (this.$route.query.typeid) { // 视频菜单刷新选中
+        this.title = this.$route.query.typeid
+        this.activeTitle = this.$route.query.typeid
+      }
+      if (this.$route.path.indexOf('/pages/pic/') > -1) {  // 写真菜单刷新选中
+        this.activeTitle = '写真'
+      } else if (this.$route.path.indexOf('/pages/novel/') > -1) {  // 小说菜单刷新选中
+        this.activeTitle = '小说'
+      } else if (this.$route.path.indexOf('/pages/live/') > -1) {  // 直播菜单刷新选中
+        this.activeTitle = '直播'
+      }
+    }, 500)
   },
   methods: {
     doSearch () {
@@ -50,19 +63,19 @@ export default {
         return false
       } else {
         this.$router.push({
-            path: `/pages/video/search?keywords=${this.keywords}`
+            path: `/pages/movie/search?keywords=${this.keywords}`
         })          
       }
     },
     toDtail (id,title) {
-      this.activeId = id
+      this.activeTitle = title
       if (title === '首页') {
         this.$router.push({
             path: `/`
         })
       } else if (title === '写真') {
         this.$router.push({
-            path: `/pages/photo/list`
+            path: `/pages/pic/index`
         })
       }  else if (title === '小说') {
         this.$router.push({
@@ -74,7 +87,7 @@ export default {
         })
       } else {
         this.$router.push({
-            path: `/pages/video/list?typeid=${title}`
+            path: `/pages/movie/index?typeid=${title}`
         })     
       }
     }
@@ -110,7 +123,7 @@ export default {
           line-height: 80px;
           color: #fff;
           font-size: 20px;
-          padding: 0 25px;
+          padding: 0 20px;
           cursor: pointer;
           &:hover,
           &.active {
@@ -135,7 +148,7 @@ export default {
 @media screen and (max-width: 1180px) {
   .header .main .menus ul li {
     font-size: 18px;
-    padding: 0 15px;
+    padding: 0 10px;
   }
 }
 </style>

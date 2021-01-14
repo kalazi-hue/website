@@ -5,10 +5,10 @@
 		 "enablePullDownRefresh": false
 	  }
     },{
-		"path": "pages/video/index"
+		"path": "pages/movie/index"
 	},
 	{
-		"path": "pages/video/search",
+		"path": "pages/movie/search",
 		"style": {
 			"titleImage": "", // 不需要顶部logo
 			"app-plus": {
@@ -24,7 +24,7 @@
 		}
 	},
 	{
-		"path": "pages/photo/view",
+		"path": "pages/pic/view",
 		"style": {
 			"navigationBarTitleText": "图集详情",
 			"app-plus": {
@@ -37,14 +37,14 @@
 			}
 		}
 	},{
-		"path": "pages/photo/index"
+		"path": "pages/pic/index"
 	},{
 		"path": "pages/novel/index"
 	}, {
 		"path": "pages/live/index"
 	},
     {
-      "path": "pages/video/detail",
+      "path": "pages/movie/detail",
       "style": {
 		"titleImage": "", // 不需要顶部logo
         "app-plus": {
@@ -106,7 +106,7 @@
   			"text" : "首页"
   		}
   		,{
-  			"pagePath" : "pages/video/index",
+  			"pagePath" : "pages/movie/index",
   			"iconPath" : "static/images/tabbar/movie.png",
   			"selectedIconPath" : "static/images/tabbar/movie_active.png",
   			"text" : "电影"
@@ -118,7 +118,7 @@
   			"text" : "直播"
   		},
   		{
-  			"pagePath" : "pages/photo/index",
+  			"pagePath" : "pages/pic/index",
   			"iconPath" : "static/images/tabbar/photo.png",
   			"selectedIconPath" : "static/images/tabbar/photo_active.png",
   			"text" : "写真"

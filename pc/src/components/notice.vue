@@ -26,7 +26,9 @@ export default {
 	},
 	created () {
     if (this.noticeContent && !sessionStorage.getItem('showNotice')) {
-      this.dialogVisible = true
+      setTimeout(()=> {
+        this.dialogVisible = true
+      }, 800)
     } else {
       this.dialogVisible = false
     }

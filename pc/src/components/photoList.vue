@@ -74,7 +74,7 @@ export default {
     },
     goPlayer (content) {
       this.$router.push({
-        path: `/pages/photo/detail?content=${content}`
+        path: `/pages/pic/detail?content=${content}`
       })
     },
     backtop () {

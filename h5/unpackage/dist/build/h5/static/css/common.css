@@ -1,6 +1,12 @@
+
 /* 背景颜色 */
+.photo-page,
+.wf-page,
+.banner-loading,
+.uni-page-head-search,
 .tabs,
-.tui-drawer-container,
+.player-bottom,
+.uni-drawer__content,
 .banner-container,
 .video-list-home,
 .ad-banner,
@@ -9,6 +15,10 @@
 }
 
 /* 字体颜色 */
+.uni-input-input,
+.tag,
+.result,
+.menu-title,
 .tabbar-title,
 .uni-tab-item-title,
 .tab-bar,
@@ -16,41 +26,46 @@
 .list-title,
 .list-playCount,
 .list-star,
-.page-title {
+.title-txt {
 	color: #fff;
 	opacity: 0.9;
 }
 
+/* 图标颜色 */
+.ico-eye,
+.ico-like {
+    color: #8b79ff;	
+}
+
 /* 顶部 tabbar 黑暗主题 */
+.placeholder,
+.list-bottom-loading,
+.list-top,
 .hx-navbar__content,
 .tui-tabbar-item,
-/* .tui-tabbar, */
-/* .tui-navigation-bar, */
-.uni-page-head,
 .uni-tabbar,
 .tab-bar {
     background-color: #141414 !important;	
 }
-
-/* 顶部 tabbar 白色主题 */
-.hx-navbar__content {
-    background-color: #fff !important;	
-}
-
-.uni-body {
-    /* padding-top: 44px; */
-    /* padding-bottom: 80px; */
+ 
+/* 白色背景 */
+.aaaaaa {
+    background-color: #fff;
 }
 
 .page-title {
 	font-size: 44rpx;
-	padding: 30rpx 0 20rpx 30rpx;
+	padding: 10rpx 0 0 30rpx;
     width: 180rpx;
 	/* #ifndef APP-PLUS */
-	background-image: url(/static/images/icons/ico-line.png);
-	background-repeat: no-repeat;
-	background-position: 30rpx bottom;
-    background-size: contain;
+    box-sizing: initial !important;
+	/* #endif */
+	margin-bottom: -2px;
+}
+.page-title-icons {
+	margin-top: 15rpx;
+	/* #ifndef APP-PLUS */
+	display: flex;
 	/* #endif */
 }
 .video-list {
@@ -58,3 +73,4 @@
 	border-top-style: solid;
 	border-top-color: #666;	
 }
+

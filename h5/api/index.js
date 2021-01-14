@@ -13,6 +13,6 @@ if (process.env.NODE_ENV === 'development') { // 测试
 // api = 'https://apitest.saohu00.com/v1'
 
 //线上地址
-configApi = 'https://www.8dafu.com/api'
+configApi = 'https://niuniutv5.com/api'
  
 export default { configApi }

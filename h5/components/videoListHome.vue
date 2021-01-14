@@ -8,7 +8,7 @@
 		<view class="video-list" v-if="videoList.length > 0">
 			<view 
 				v-for="(newsItem, index) in videoList" 
-				@click="goDetail(newsItem)" 
+				@click="goDetail(newsItem.ID)" 
 				 v-if="newsItem.status"
 				:key="index" 
 				class="list-item" 
@@ -73,9 +73,9 @@ export default {
 				}
 			});
 		},
-		goDetail (item) {
+		goDetail (vid) {
 			uni.navigateTo({
-				url: '/pages/video/detail?query=' +JSON.stringify(item)
+				url: '/pages/movie/detail?videoId=' + vid
 			});
 		}
 	}

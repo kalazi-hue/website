@@ -19,7 +19,7 @@
 			goDetail(item) {
 				console.log(JSON.stringify(item))
 				uni.navigateTo({
-					url: '/pages/photo/view?query=' +JSON.stringify(item)
+					url: '/pages/pic/view?query=' +JSON.stringify(item)
 				});
 			}
 		}
@@ -33,6 +33,7 @@
 	
 	.item-img{
 		width: 100%;
+		background-color: #141414;
 	}
 	
 	.item-info{

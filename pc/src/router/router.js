@@ -4,13 +4,13 @@ import Router from 'vue-router'
 const index = (resolve) => import('@/pages/index').then((module) => {
   resolve(module)
 })
-const videoList = (resolve) => import('@/pages/video/list').then((module) => {
+const videoList = (resolve) => import('@/pages/movie/index').then((module) => {
   resolve(module)
 })
-const videoDetail = (resolve) => import('@/pages/video/detail').then((module) => {
+const videoDetail = (resolve) => import('@/pages/movie/detail').then((module) => {
   resolve(module)
 })
-const videoSearch = (resolve) => import('@/pages/video/search').then((module) => {
+const videoSearch = (resolve) => import('@/pages/movie/search').then((module) => {
   resolve(module)
 })
 const novelList = (resolve) => import('@/pages/novel/list').then((module) => {
@@ -19,10 +19,10 @@ const novelList = (resolve) => import('@/pages/novel/list').then((module) => {
 const novelDetail = (resolve) => import('@/pages/novel/detail').then((module) => {
   resolve(module)
 })
-const photoList = (resolve) => import('@/pages/photo/list').then((module) => {
+const picList = (resolve) => import('@/pages/pic/index').then((module) => {
   resolve(module)
 })
-const photoDetail = (resolve) => import('@/pages/photo/detail').then((module) => {
+const picDetail = (resolve) => import('@/pages/pic/detail').then((module) => {
   resolve(module)
 })
 const liveList = (resolve) => import('@/pages/live/list').then((module) => {
@@ -55,11 +55,11 @@ const router = new Router({
   routes: [
     { path: '*', redirect: '/pages/index' },
     { path: '/pages/index', name: 'index',component: index },
-    { path: '/pages/video/list', component: videoList },
-    { path: '/pages/video/detail/:id', component: videoDetail },
-    { path: '/pages/video/search', component: videoSearch },
-    { path: '/pages/photo/list', component: photoList },
-    { path: '/pages/photo/detail', component: photoDetail },
+    { path: '/pages/movie/index', component: videoList },
+    { path: '/pages/movie/detail', component: videoDetail },
+    { path: '/pages/movie/search', component: videoSearch },
+    { path: '/pages/pic/index', component: picList },
+    { path: '/pages/pic/detail', component: picDetail },
     { path: '/pages/novel/list', component: novelList },
     { path: '/pages/novel/detail', component: novelDetail },
     { path: '/pages/live/list', component: liveList },

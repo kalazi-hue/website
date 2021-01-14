@@ -2,9 +2,10 @@ import axios from 'axios';
 
 // 环境的切换
 if (process.env.NODE_ENV == 'development') {    
-  axios.defaults.baseURL = 'https://www.8dafu.com/api';
+  // axios.defaults.baseURL = 'https://www.8dafu.com/api';
+  axios.defaults.baseURL = 'https://niuniutv5.com/api';
 } else if (process.env.NODE_ENV == 'production') {    
-  axios.defaults.baseURL = 'https://www.8dafu.com/api';
+  axios.defaults.baseURL = 'https://niuniutv5.com/api';
 }
 
 // 请求超时时间

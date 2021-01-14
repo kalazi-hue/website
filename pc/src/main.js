@@ -11,6 +11,10 @@ import('babel-polyfill') // 兼容低版本IE
 import waterfall from 'vue-waterfall2' 
 import VueClipboard  from 'vue-clipboard2'
 import store from './store'
+import VueAwesomeSwiper from 'vue-awesome-swiper'
+import 'swiper/dist/css/swiper.css'
+
+Vue.use(VueAwesomeSwiper)
 
 Vue.use(VueClipboard)
 Vue.use(waterfall)

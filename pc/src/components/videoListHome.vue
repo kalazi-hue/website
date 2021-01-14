@@ -3,7 +3,7 @@
     <div class="title-video">
       <h2>{{ title }}</h2> 
       <ul class="list-title">
-        <li v-for="(list, index) in videoList.slice(10)" @click="goPlayer(list)" :key="index" v-if="list.status">
+        <li v-for="(list, index) in videoList.slice(10)" @click="goPlayer(list.ID)" :key="index" v-if="list.status">
             {{ list.title }}
         </li>
       </ul>
@@ -13,8 +13,8 @@
     <div class="list-box">
       <div class="list-swiper">
         <swiper :options="swiperOption" class="swiper-wrap"  ref="mySwiper">
-          <swiper-slide v-for="(list, index) in videoListSwiper" @click="goPlayer(list)" :key="index" v-if="list.status">
-            <div class="img">
+          <swiper-slide v-for="(list, index) in videoListSwiper" :key="index" v-if="list.status">
+            <div class="img" @click="goPlayer(list.ID)">
               <div class="overlay"><i class="ico-play"></i></div>
               <span class="playtime">{{ list.play_time }}</span>
               <img v-lazy="list.cover" alt="">
@@ -26,8 +26,8 @@
       </div>
 
       <ul class="list">
-        <li v-for="(list, index) in videoList" v-show="index > 4 && index < 11" @click="goPlayer(list)" :key="index" v-if="list.status">
-          <div class="img">
+        <li v-for="(list, index) in videoList" v-show="index > 4 && index < 11" :key="index" v-if="list.status">
+          <div class="img" @click="goPlayer(list.ID)">
               <div class="overlay"><i class="ico-play"></i></div>
               <span class="playtime">{{ list.play_time }}</span>
               <img v-lazy="list.cover" alt="">
@@ -79,8 +79,8 @@ export default {
 	created () {
     this.showLatestList ? this.getLatestMovieList('getLatestMovieList') : ''
     this.showRecommendList ? this.getRecommendMovieList('getRecommendMovieList') : ''
-    this.showRecommendList ? this.title = '今日更新' : this.title = '热门推荐'
-    this.showRecommendList ? this.path = `/pages/video/list?typeid=${1}` : this.path = `/pages/video/list?typeid=${2}`
+    this.showRecommendList ? this.title = '热门推荐' : this.title = '今日更新'
+    this.showRecommendList ? this.path = `/pages/movie/index?typeid=${1}` : this.path = `/pages/movie/index?typeid=${2}`
 	},
   methods: {
     getLatestMovieList (type) {
@@ -110,10 +110,9 @@ export default {
         path: this.path
       })
     },
-    goPlayer (item) {
-      sessionStorage.setItem('videoDetail', JSON.stringify(item))
+    goPlayer (vid) {
       this.$router.push({
-        path: `/pages/video/detail/${item.ID}`
+        path: `/pages/movie/detail?videoId=${vid}`
       })
     },
     backtop () {

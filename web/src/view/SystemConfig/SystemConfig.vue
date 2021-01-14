@@ -32,8 +32,8 @@
     <el-table-column type="selection" width="55"></el-table-column>
 
 
-      <el-table-column label="公告1" prop="notice" ></el-table-column>
-      <!-- <el-table-column label="公告2" prop="notice2" ></el-table-column> -->
+      <el-table-column label="公告" prop="notice" ></el-table-column>
+      <el-table-column label="安卓下载链接" prop="notice2" ></el-table-column>
 
       <el-table-column label="最新访问域名" prop="lastAccessDomain" ></el-table-column>
     
@@ -83,10 +83,10 @@
 
     <el-dialog :before-close="closeDialog" :visible.sync="dialogFormVisible" title="弹窗操作">
       <el-form :model="formData" label-position="right" label-width="80px">
-         <el-form-item label="公告1:">
+         <el-form-item label="公告:">
             <el-input v-model="formData.notice" clearable placeholder="请输入" ></el-input>
       </el-form-item>
-          <el-form-item label="公告2:">
+          <el-form-item label="安卓下载链接:">
             <el-input v-model="formData.notice2" clearable placeholder="请输入" ></el-input>
           </el-form-item>
          <el-form-item label="最新访问域名:">

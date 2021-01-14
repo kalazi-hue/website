@@ -17,6 +17,8 @@ export const API = {
   getRecommendMovieList: params => { return fetch('/movie/getRecommendMovieList', params).then(res => res.data)},
 	// 影片详情页面，点击tag获取影片
   getMovieListByTag: params => { return fetch('/movie/getMovieListByTag', params).then(res => res.data)},
+	//  用id查询Movie详情
+  findMovie: params => { return fetch('/movie/findMovie', params).then(res => res.data)},
 	// 首页->顶部->「国产、日韩」模块
   getMovieListByTypeId: params => { return fetch('/movie/getMovieListByTypeId', params).then(res => res.data)},
 	// 首页，关键词搜索影片
@@ -27,6 +29,8 @@ export const API = {
  	getPhotoAlbumList: params => { return fetch('/photoAlbum/getPhotoAlbumList', params).then(res => res.data)},
 	// 点击类型查询写真
  	getPhotoAlbumListByType: params => { return fetch('/photoAlbum/getPhotoAlbumListByType', params).then(res => res.data)},
+	//  用id查询Movie详情
+ 	findPhotoAlbum: params => { return fetch('/photoAlbum/findPhotoAlbum', params).then(res => res.data)},
 	// 反馈
  	createPlayFeedback: params => { return post('/playFeedback/createPlayFeedback', params).then(res => res.data)}
 }

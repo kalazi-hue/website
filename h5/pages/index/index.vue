@@ -64,7 +64,7 @@
 			 this.openDrawer()
 		} else if (e.index === 1) {  // 顶部右边搜索
 			uni.navigateTo({
-				url: '/pages/video/search'
+				url: '/pages/movie/search'
 			});
 		}
 	},

@@ -26,7 +26,7 @@ export default {
   },
   methods: {
     search (name) {
-      this.$router.push({ path: '/pages/video/search', query: { tag: name } })
+      this.$router.push({ path: '/pages/movie/search', query: { tag: name } })
     },
     // 获取标签列表
     fetchTags () {
