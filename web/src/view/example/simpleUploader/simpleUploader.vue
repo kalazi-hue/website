@@ -22,14 +22,14 @@
 
     <div class="img-detail">
       <el-form :model="formData" ref="formData" label-position="right" label-width="80px">
-        <el-form-item label="图集类型">
+        <el-form-item label="*图集类型">
           <el-select v-model="formData.type" placeholder="请选择类型">
             <el-option label="写真图集" value="写真"></el-option>
             <!-- <el-option label="漫画图集" value="漫画"></el-option> -->
           </el-select>
         </el-form-item>
 
-        <el-form-item label="图集标题:">
+        <el-form-item label="*图集标题:">
           <el-input v-model="formData.title" clearable placeholder="请输入" ></el-input>
         </el-form-item>
 
@@ -103,7 +103,7 @@
         :closable="false">
     </el-alert>
 
-    <uploader-list v-show="isShowStep2 || isShowStep3" v-if="isShowList"></uploader-list>
+    <uploader-list v-if="isShowList" style="margin: 10px 0 0;"></uploader-list>
 
     <el-button type="primary" @click="resetForm('formData')" style="margin: 20px auto 0;" v-show="isShowStep3">
       再次上传<i class="el-icon-refresh-right"></i>
@@ -321,12 +321,6 @@ export default {
       } else if (!that.formData.title) {
         that.$message({
           message: '请填写图集标题',
-          type: "error"
-        });
-        return false
-      }  else if (!that.formData.desc) {
-        that.$message({
-          message: '请填写图集描述',
           type: "error"
         });
         return false

@@ -40,25 +40,14 @@
         </el-form-item>
 
         <el-form-item label="影片标签:">
-          <el-tag
-              :key="item"
-              v-for="item in formData.tag"
-              closable
-              :disable-transitions="false"
-              @close="handleClose(item)">
-            {{item}}
-          </el-tag>
-          <el-input
-              class="input-new-tag"
-              v-if="inputVisible"
-              v-model="inputValue"
-              ref="saveTagInput"
-              size="small"
-              @keyup.enter.native="handleInputConfirm"
-              @blur="handleInputConfirm"
-          >
-          </el-input>
-          <el-button v-else class="button-new-tag" size="small" @click="showInput">+ 关键词</el-button>
+          <el-select v-model="inputValue" @change="changeLocationValue" multiple placeholder="可以下拉选择多个" style="width: 800px">
+            <el-option
+              v-for="item in tagList"
+              :key="item.ID"
+              :label="item.name"
+              :value="item.ID">
+            </el-option>
+          </el-select>
         </el-form-item>
 
         <el-form-item label="是否置顶:">
@@ -93,7 +82,7 @@
 
     <el-alert
         v-show="isShowStep3"
-        title="第三步：请上传影片"
+        title="第三步：请上传原视频（mp4格式）"
         show-icon
         type="success"
         :closable="false"
@@ -128,6 +117,7 @@ var notUploadedChunks = []; // 已经上传过的文件chunkNumber数组
 var isUploaded = false; // 文件已经上传成功了
 import { mapGetters } from "vuex";
 import { checkFileMd5,mergeFileMd5 } from "@/api/simpleUploader1";
+import { getAllTagList } from "@/api/Tag";
 import SparkMD5 from "spark-md5";
 const path = process.env.VUE_APP_BASE_API;
 export default {
@@ -142,6 +132,8 @@ export default {
       isShowList: true,
       inputVisible: false,
       inputValue: '',
+      tagList: [],
+      departmentNames:[],
       formData: {
         title: '',
         desc: '',
@@ -192,8 +184,28 @@ export default {
       };
     }
   },
+  created () {
+    this.getAllTagList()
+  },
   methods: {
-
+    changeLocationValue(val){
+      this.departmentNames = []
+      for(let i=0;i<=val.length-1;i++){
+        this.tagList.find((item)=>{
+          if(item.ID == val[i]){
+            this.departmentNames.push(item.name)
+          }
+        });
+      }
+      this.formData.tag = this.departmentNames
+    },
+    async getAllTagList(row) {
+      const res = await getAllTagList();
+      if (res.code == 0) {
+        console.log(res.data.list)
+        this.tagList = res.data.list
+      }
+    },
     // 上传单个文件
     fileAdded(file) {
       this.computeMD5(file); // 生成MD5

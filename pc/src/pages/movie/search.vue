@@ -6,7 +6,7 @@
       共搜索到<span>{{ videoList.length }}</span>条包含关键字<span>"{{ keywords || tag }}"</span>的影片
     </p>
     <ul class="list">
-      <li v-for="(list, index) in videoList" @click="goPlayer(list)" :key="index" v-if="list.status">
+      <li v-for="(list, index) in videoList" @click="goPlayer(list.ID)" :key="index" v-if="list.status">
         <div class="img">
           <div class="overlay"><i class="ico-play"></i></div>
           <img v-lazy="list.cover" alt="">
@@ -81,10 +81,9 @@ export default {
         this.totalPage = res.total
       })
     },
-    goPlayer (item) {
-      sessionStorage.setItem('videoDetail', JSON.stringify(item))
+    goPlayer (vid) {
       this.$router.push({
-        path: `/pages/movie/detail/${item.ID}`
+        path: `/pages/movie/detail?videoId=${vid}`
       })
     },
     backtop () {

@@ -2,7 +2,7 @@
   <view class="page-news">
     <!-- #ifdef MP-QQ -->
     <scroll-view class="listview" style="flex: 1;" enableBackToTop="true" scroll-y @scrolltolower="loadMore()">
-      <view v-for="(item, index) in dataList" :key="item.ID" @click="goDetail(item)">
+      <view v-for="(item, index) in dataList" :key="item.ID" @click="goDetail(item.ID)">
         <news-item :newsItem="item"></news-item>
       </view>
       <view class="loading-more" v-if="isLoading || dataList.length > 4">
@@ -30,7 +30,7 @@
 	  </uni-cell>
 	  
 	  <uni-cell class="video-list" v-if="dataList.length > 0">
-		  <view v-for="(item, index) in dataList" :key="item.ID" class="list-item" :class="{'list-item-even': index % 2 === 0}" @click="goDetail(item)">
+		  <view v-for="(item, index) in dataList" :key="item.ID" class="list-item" :class="{'list-item-even': index % 2 === 0}" @click="goDetail(item.ID)">
 			<news-item :newsItem="item"></news-item>			  
 		  </view>
       </uni-cell>
@@ -208,10 +208,9 @@
 			this.requestParams.minId = 0;
 		},
 		goDetail(item) {
-			  console.log(JSON.stringify(item))
-			  uni.navigateTo({
-				url: '/pages/movie/detail?query=' +JSON.stringify(item)
-			  });
+			uni.navigateTo({
+				url: '/pages/movie/detail?videoId=' + vid
+			});
 		},
 		refreshData() {
 			if (this.isLoading) {

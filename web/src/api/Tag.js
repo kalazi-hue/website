@@ -98,3 +98,19 @@ export const createTag = (data) => {
          params
      })
  }
+
+// @Tags Tag
+// @Summary 分页获取Tag列表
+// @Security ApiKeyAuth
+// @accept application/json
+// @Produce application/json
+// @Param data body request.PageInfo true "获取全部Tag列表"
+// @Success 200 {string} string "{"success":true,"data":{},"msg":"获取成功"}"
+// @Router /tag/getTagList [get]
+ export const getAllTagList = (params) => {
+     return service({
+         url: "/tag/getAllTagList",
+         method: 'get',
+         params
+     })
+ }

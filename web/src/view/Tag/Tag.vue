@@ -137,11 +137,11 @@ export default {
       visible: false,
       type: "",
       deleteVisible: false,
-      multipleSelection: [],formData: {
-            name:"",
-            sort:0,
-            status:false,
-            
+      multipleSelection: [],
+      formData: {
+        name:"",
+        sort:0,
+        status:true
       }
     };
   },
@@ -209,7 +209,6 @@ export default {
         if (isSwitch === 'isSwitch') { // 表格列Switch按钮直接切换
           this.dialogFormVisible = false;
           this.formData.status = e
-          console.log(e)
           this.enterDialog(isSwitch)
         } else {
           this.dialogFormVisible = true;          
