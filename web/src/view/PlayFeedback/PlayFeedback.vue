@@ -17,6 +17,7 @@
         </el-form-item>
       </el-form>
     </div>
+
     <el-table
       :data="tableData"
       @selection-change="handleSelectionChange"
@@ -29,18 +30,26 @@
     <el-table-column type="selection" width="55"></el-table-column>
 
     
-    <el-table-column label="影片ID" prop="movieId" ></el-table-column>
+    <el-table-column label="影片ID" prop="movieId" width="80"></el-table-column>
+
+    <el-table-column label="影片标题" width="260" show-overflow-tooltip>
+        <template slot-scope="scope">
+            <p>{{scope.row.title}}</p>
+        </template>
+    </el-table-column>
+
+    <el-table-column label="播放链接" show-overflow-tooltip>
+        <template slot-scope="scope">
+            <p>{{scope.row.playUrl}}</p>
+        </template>
+    </el-table-column>
     
-    <el-table-column label="标题" prop="title" ></el-table-column>
+    <el-table-column label="反馈类型" prop="type" width="100"></el-table-column>
     
-    <el-table-column label="播放链接" prop="playUrl" ></el-table-column>
-    
-    <el-table-column label="反馈类型" prop="type" ></el-table-column>
-    
-    <el-table-column label="创建日期" >
+    <el-table-column label="创建日期"  width="100">
              <template slot-scope="scope">{{scope.row.CreatedAt|formatDate}}</template>
         </el-table-column>
-      <el-table-column label="操作">
+      <el-table-column label="操作" width="160">
         <template slot-scope="scope">
           <el-popover placement="top" width="160" v-model="scope.row.visible">
             <p>确定要删除吗？</p>

@@ -7,7 +7,7 @@
             {{ list.title }}
         </li>
       </ul>
-      <span @click="goPath(path)" class="more">更多<i class="el-icon-d-arrow-right"></i></span>
+      <span @click="goPath('/pages/movie/index?typeid=最新')" class="more">更多<i class="el-icon-d-arrow-right"></i></span>
     </div>
 
     <div class="list-box">
@@ -238,6 +238,7 @@ export default {
         border-radius: 10px;
         width: 31%;
         margin: 0 0 15px 15px;
+        max-height: 148px;
       }
     }
     .img {

@@ -9,7 +9,7 @@
 				<video 
 					id="myVideo"
 					class="video"
-					:src="playerUrl" 
+					src="https://play.saohu187.com/upload/2019-09-28/02acca6266cee9516b12589f41199321/m3u8/hevc_index.m3u8" 
 					page-gesture="true"
 					object-fit="none"
 					controls
@@ -413,7 +413,10 @@
     text-align: left;
 	margin: 15upx 0; 
 }
- 
+.tag-list {
+    flex-wrap: wrap;
+    width: 740upx;
+}
 .tag {
     font-size: 26upx;
 	border-width: 1px;

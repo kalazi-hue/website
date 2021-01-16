@@ -19,7 +19,7 @@
 					<view class="shadow"></view>
 					<text class="list-date">{{newsItem.createdAt.split(' ')[0]}}</text>
 				</view>
-				<view class="list-title">{{newsItem.title}}</view>
+				<text class="list-title">{{newsItem.title}}</text>
 				<view class="list-bottom">
 					<view class="list-playCount">
 						<image src="/static/images/icons/ico-eye.png" mode="widthFix" class="ico-eye"></image>
@@ -83,5 +83,5 @@ export default {
 </script>
 
 <style scoped>
-@import '@/static/css/videoList.css';	
+@import '@/static/css/videoList.css';
 </style>

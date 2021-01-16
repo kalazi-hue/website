@@ -207,7 +207,7 @@
 			this.dataList.length = 0;
 			this.requestParams.minId = 0;
 		},
-		goDetail(item) {
+		goDetail(vid) {
 			uni.navigateTo({
 				url: '/pages/movie/detail?videoId=' + vid
 			});

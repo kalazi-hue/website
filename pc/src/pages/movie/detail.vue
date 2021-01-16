@@ -45,6 +45,7 @@
 </template>
 
 <script>
+let Hls = require('hls.js')
 import DPlayer from 'dplayer'
 import { API } from '@/api'
 import axios from 'axios'
@@ -65,34 +66,48 @@ export default {
       errorName: ''
     }
   },
+  created () {
+    let _this = this
+    this.getDetail()
+  },
   mounted() {
-    if (this.$route.query.videoId) { // 视频菜单刷新选中
-      this.videoId = this.$route.query.videoId
-    } else {
-      this.$message('未找到片源，请返回列表页');
-    }
-    this.getMovieDetail()
-    const dp = new DPlayer({
-      container: document.getElementById('dplayer'),
-      autoplay: true,
-      screenshot: true,
-      hotkey: true,
-      theme: '#ff40dd',
-      loop: true,
-      lang: 'zh-cn',
-      preload: 'auto',
-      logo: require('../../assets/images/logo.png'),
-      volume: 0.7,
-      video: {
-        url: this.videoDetail.playUrl,
-        type: 'auto',
-      },
-    })
-    this.shareHref = window.location.href
+    this.initPlayer()
+    // this.shareHref = window.location.href
   },
   methods:{
+     initPlayer() {
+      const dp = new DPlayer({
+        container: document.getElementById('dplayer'),
+        autoplay: true,
+        screenshot: true,
+        hotkey: true,
+        theme: '#ff40dd',
+        loop: true,
+        lang: 'zh-cn',
+        preload: 'auto',
+        logo: require('../../assets/images/logo.png'),
+        video: {
+          url: this.videoDetail.playUrl, // 地址
+          pic: this.videoDetail.cover,  // 封面
+          type: 'customHls',
+          customType: {
+            customHls: function (video, player) {
+              const hls = new Hls();
+              hls.loadSource(video.src);
+              hls.attachMedia(video);
+            },
+          },
+        },
+      });
+    },
     radioChange(val){
       this.errorName = val
+    },
+    getDetail () {
+      if (this.$route.query.videoId) {
+        this.videoId = this.$route.query.videoId
+        this.getMovieDetail()
+      }
     },
     getMovieDetail (type) {
       let params = {
@@ -102,6 +117,7 @@ export default {
           console.log(res.removie)  
         if (res.removie) {
           this.videoDetail = res.removie
+          this.initPlayer()
         }    
       })
     },
@@ -206,6 +222,9 @@ export default {
     downloadVideo () {
       window.open(this.videoDetail.downUrl)
     }
+  },
+  watch: {
+    '$route':'getDetail'
   }
 }
 </script>

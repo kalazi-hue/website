@@ -58,9 +58,8 @@ export default {
 					if (uni.getSystemInfoSync().platform === 'android') {
 						if (that.configList[0].notice2.indexOf('.apk') > -1) { // 安卓apk存在
 							that.androidUrl = that.configList[0].notice2
-							that.AndroidCheckUpdate(that.androidUrl) // 检测更新
 							//#ifndef H5
-							_this.AndroidCheckUpdate(_this.androidUrl) // 检测更新
+							that.AndroidCheckUpdate(that.androidUrl) // 检测更新
 							//#endif
 						}
 					}

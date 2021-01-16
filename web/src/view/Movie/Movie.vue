@@ -78,13 +78,13 @@
 
     <el-table-column prop="title" label="片名" width="120" height="80" show-overflow-tooltip>
         <template slot-scope="scope">
-            <p class="">{{scope.row.title}}</p>
+            <p>{{scope.row.title}}</p>
         </template>
     </el-table-column>
 
     <el-table-column prop="description" label="影片简介" width="120" height="80" show-overflow-tooltip>
         <template slot-scope="scope">
-            <p class="">{{scope.row.description}}</p>
+            <p>{{scope.row.description}}</p>
         </template>
     </el-table-column>
     
@@ -96,35 +96,39 @@
     
     <el-table-column prop="shelfTime" label="上架时间" width="120" show-overflow-tooltip>
         <template slot-scope="scope">
-            <p class="">{{scope.row.shelfTime}}</p>
+            <p>{{scope.row.shelfTime}}</p>
         </template>
     </el-table-column>
     
     <el-table-column prop="createdAt" label="创建日期" width="120" show-overflow-tooltip>
         <template slot-scope="scope">
-            <p class="">{{scope.row.createdAt|formatDate}}</p>
+            <p>{{scope.row.createdAt|formatDate}}</p>
         </template>
     </el-table-column>
     
-    <el-table-column label="影片时长" prop="playTime" ></el-table-column> 
+    <el-table-column label="影片时长" width="95" show-overflow-tooltip>
+        <template slot-scope="scope">
+            <p>{{scope.row.playTime || '视频处理中'}}</p>
+        </template>
+    </el-table-column>
     
     <el-table-column prop="playUrl" label="播放链接" width="120" show-overflow-tooltip>
         <template slot-scope="scope">
-            <p class="">{{scope.row.playUrl}}</p>
+            <p>{{scope.row.playUrl}}</p>
         </template>
     </el-table-column>
 
     <el-table-column prop="downUrl" label="下载链接" width="120" show-overflow-tooltip>
         <template slot-scope="scope">
-            <p class="">{{scope.row.downUrl}}</p>
+            <p>{{scope.row.downUrl}}</p>
         </template>
     </el-table-column>
 
     <el-table-column label="影片类型" prop="type" ></el-table-column> 
 
-    <el-table-column prop="tags" label="标签" width="120" show-overflow-tooltip>
+    <el-table-column prop="tags" label="标签" width="160" show-overflow-tooltip>
         <template slot-scope="scope">
-            <p class="">{{scope.row.tags}}</p>
+            <p class="tag-item"><el-tag type="info" size="mini" v-for="item in scope.row.tags.split(',')" v-if="item">{{ item }}</el-tag></p>
         </template>
     </el-table-column>
     
@@ -440,5 +444,12 @@ export default {
 };
 </script>
 
-<style>
+<style scoped="">
+.tag-item {
+  display: flex;
+  flex-wrap: wrap;
+}
+.tag-item .el-tag {
+  margin: 0 2px 2px 0;
+}
 </style>
